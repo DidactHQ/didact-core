@@ -1,4 +1,5 @@
 ﻿using DidactCore.Exceptions;
+using DidactCore.Models.Constants;
 using DidactCore.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,11 +19,13 @@ namespace DidactCore.Models.Blocks
 
         public string Name { get; set; }
 
+        public string State { get; set; } = BlockState.Idle;
+
         public int RetryAttemptsThreshold { get; set; }
 
         public int RetryDelayMilliseconds { get; set; }
 
-        public decimal Timeout { get; set; }
+        public int Timeout { get; set; }
 
         public int RetriesAttempted { get; private set; }
 
@@ -55,7 +58,7 @@ namespace DidactCore.Models.Blocks
             return this;
         }
 
-        public ActionBlock<T> WithTimeout(decimal timeoutThreshold)
+        public ActionBlock<T> WithTimeout(int timeoutThreshold)
         {
             Timeout = timeoutThreshold;
             return this;
@@ -68,7 +71,7 @@ namespace DidactCore.Models.Blocks
             return this;
         }
 
-        public async Task ExecuteAsync()
+        public async Task ExecuteDelegateAsync()
         {
             if (Action == default || Parameter == null)
             {
@@ -79,26 +82,48 @@ namespace DidactCore.Models.Blocks
             {
                 try
                 {
+                    State = BlockState.Running;
                     _logger.LogInformation("Action Block {name} executing delegate...", Name);
                     Action(Parameter);
+                    State = BlockState.Succeeded;
                 }
                 catch (Exception ex)
                 {
                     if (RetriesAttempted <= RetryAttemptsThreshold)
                     {
+                        State = BlockState.Failing;
                         _logger.LogError(ex, "Action Block {name} encountered an unhandled exception. See details: {ex}", Name, JsonSerializer.Serialize(ex, new JsonSerializerOptions(JsonSerializerDefaults.Web)));
                         _logger.LogInformation("Action Block {name} incrementing retry attempts and awaiting retry delay...", Name);
                         RetriesAttempted++;
                         await Task.Delay(RetryDelayMilliseconds);
+                        State = BlockState.Retrying;
                         _logger.LogInformation("Action Block {name} attempting retry...", Name);
                         continue;
                     }
                     else
                     {
+                        State = BlockState.Failed;
                         _logger.LogCritical(ex, "Action Block {name} has encountered an unhandled exception and has now failed. See details: {ex}", Name, JsonSerializer.Serialize(ex, new JsonSerializerOptions(JsonSerializerDefaults.Web)));
                         throw;
                     }
                 }
+            }
+        }
+
+        public async Task ExecuteAsync()
+        {
+            var timeoutTask = Task.Delay(Timeout);
+            var delegateTask = ExecuteDelegateAsync();
+
+            if (timeoutTask == await Task.WhenAny(ExecuteDelegateAsync(), Task.Delay(Timeout)))
+            {
+                State = BlockState.Failed;
+                _logger.LogCritical("Action Block {name} exceeded its timeout threshold.", Name);
+                throw new TimeoutException($"Action Block {Name} exceeded its timeout threshold.");
+            }
+            else
+            {
+                await delegateTask;
             }
         }
     }
