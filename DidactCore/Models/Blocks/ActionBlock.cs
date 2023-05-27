@@ -46,6 +46,12 @@ namespace DidactCore.Models.Blocks
             return this;
         }
 
+        public ActionBlock<T> WithName(string name)
+        {
+            Name = name;
+            return this;
+        }
+
         public ActionBlock<T> WithTimeout(decimal timeoutThreshold)
         {
             Timeout = timeoutThreshold;
@@ -65,6 +71,7 @@ namespace DidactCore.Models.Blocks
             {
                 try
                 {
+                    _logger.LogInformation("Action Block {name} executing delegate...", Name);
                     Action(Parameter);
                 }
                 catch (Exception ex)
@@ -72,7 +79,7 @@ namespace DidactCore.Models.Blocks
                     if (RetriesAttempted <= RetryAttemptsThreshold)
                     {
                         _logger.LogError(ex, "Action Block {name} encountered an unhandled exception. See details: {ex}", Name, JsonSerializer.Serialize(ex, new JsonSerializerOptions(JsonSerializerDefaults.Web)));
-                        _logger.LogInformation("Action Block {name} awaiting retry delay...", Name);
+                        _logger.LogInformation("Action Block {name} incrementing retry attempts and awaiting retry delay...", Name);
                         RetriesAttempted++;
                         await Task.Delay(RetryDelayMilliseconds);
                         _logger.LogInformation("Action Block {name} attempting retry...", Name);
