@@ -28,6 +28,8 @@ namespace DidactCore.Models.Blocks
 
         public int RuntimeMinutesElapsed { get; private set; }
 
+        public bool TimeoutExceeded { get; private set; }
+
 
         public ActionBlock(ILogger logger, IBlockRepository blockRepository)
         {
