@@ -1,4 +1,5 @@
-﻿using DidactCore.Repositories;
+﻿using DidactCore.Exceptions;
+using DidactCore.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Text.Json;
@@ -67,6 +68,11 @@ namespace DidactCore.Models.Blocks
 
         public async Task ExecuteAsync()
         {
+            if (Action == default || Parameter == null)
+            {
+                throw new NullBlockExecutorException("The executor was not properly satisfied.");
+            }
+
             while (RetriesAttempted <= RetryAttemptsThreshold)
             {
                 try
