@@ -115,16 +115,14 @@ namespace DidactCore.Models.Blocks
             var timeoutTask = Task.Delay(Timeout);
             var delegateTask = ExecuteDelegateAsync();
 
-            if (timeoutTask == await Task.WhenAny(ExecuteDelegateAsync(), Task.Delay(Timeout)))
+            if (timeoutTask == await Task.WhenAny(delegateTask, timeoutTask))
             {
                 State = BlockState.Failed;
                 _logger.LogCritical("Action Block {name} exceeded its timeout threshold.", Name);
                 throw new TimeoutException($"Action Block {Name} exceeded its timeout threshold.");
             }
-            else
-            {
-                await delegateTask;
-            }
+
+            await delegateTask;
         }
     }
 }
