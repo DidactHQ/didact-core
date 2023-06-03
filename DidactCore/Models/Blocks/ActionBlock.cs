@@ -21,13 +21,13 @@ namespace DidactCore.Models.Blocks
 
         public string State { get; set; } = BlockState.Idle;
 
-        public int RetryAttemptsThreshold { get; set; }
+        public int RetryAttemptsThreshold { get; set; } = 0;
 
         public int RetryDelayMilliseconds { get; set; }
 
         public int Timeout { get; set; }
 
-        public int RetriesAttempted { get; private set; }
+        public int RetriesAttempted { get; private set; } = 0;
 
         public int RuntimeMinutesElapsed { get; private set; }
 
@@ -73,9 +73,9 @@ namespace DidactCore.Models.Blocks
 
         public async Task ExecuteDelegateAsync()
         {
-            if (Action == default || Parameter == null)
+            if (Action == null || Parameter == null)
             {
-                throw new NullBlockExecutorException("The executor was not properly satisfied.");
+                throw new NullBlockExecutorException("The executor or its arguments were not properly satisfied.");
             }
 
             while (RetriesAttempted <= RetryAttemptsThreshold)
@@ -89,12 +89,13 @@ namespace DidactCore.Models.Blocks
                 }
                 catch (Exception ex)
                 {
+                    RetriesAttempted++;
+
                     if (RetriesAttempted <= RetryAttemptsThreshold)
                     {
                         State = BlockState.Failing;
                         _logger.LogError(ex, "Action Block {name} encountered an unhandled exception. See details: {ex}", Name, JsonSerializer.Serialize(ex, new JsonSerializerOptions(JsonSerializerDefaults.Web)));
-                        _logger.LogInformation("Action Block {name} incrementing retry attempts and awaiting retry delay...", Name);
-                        RetriesAttempted++;
+                        _logger.LogInformation("Action Block {name} awaiting retry delay...", Name);
                         await Task.Delay(RetryDelayMilliseconds);
                         State = BlockState.Retrying;
                         _logger.LogInformation("Action Block {name} attempting retry...", Name);
