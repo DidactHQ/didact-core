@@ -108,7 +108,7 @@ namespace DidactCore.Models.Blocks
             {
                 if (SoftTimeoutExceeded)
                 {
-                    State = BlockState.Failed;
+                    State = BlockState.Cancelled;
                     _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                     break;
                 }
@@ -129,7 +129,7 @@ namespace DidactCore.Models.Blocks
                     {
                         if (SoftTimeoutExceeded)
                         {
-                            State = BlockState.Failed;
+                            State = BlockState.Cancelled;
                             _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                             break;
                         }
@@ -143,7 +143,7 @@ namespace DidactCore.Models.Blocks
 
                         if (SoftTimeoutExceeded)
                         {
-                            State = BlockState.Failed;
+                            State = BlockState.Cancelled;
                             _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                             break;
                         }
