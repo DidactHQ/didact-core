@@ -61,6 +61,11 @@ namespace DidactCore.Models.Blocks
             return this;
         }
 
+        /// <summary>
+        /// Sets the name of the ActionBlock.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public ActionBlock<T> WithName(string name)
         {
             Name = name;
@@ -79,6 +84,12 @@ namespace DidactCore.Models.Blocks
             return this;
         }
 
+        /// <summary>
+        /// Sets the maximum number of retry attempts and the constant delay that should be used between each of them.
+        /// </summary>
+        /// <param name="retryAttemptsThreshold"></param>
+        /// <param name="retryDelayMilliseconds"></param>
+        /// <returns></returns>
         public ActionBlock<T> WithRetries(int retryAttemptsThreshold, int retryDelayMilliseconds)
         {
             RetryAttemptsThreshold = retryAttemptsThreshold;
@@ -97,6 +108,7 @@ namespace DidactCore.Models.Blocks
             {
                 if (SoftTimeoutExceeded)
                 {
+                    State = BlockState.Failed;
                     _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                     break;
                 }
@@ -117,6 +129,7 @@ namespace DidactCore.Models.Blocks
                     {
                         if (SoftTimeoutExceeded)
                         {
+                            State = BlockState.Failed;
                             _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                             break;
                         }
@@ -130,6 +143,7 @@ namespace DidactCore.Models.Blocks
 
                         if (SoftTimeoutExceeded)
                         {
+                            State = BlockState.Failed;
                             _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                             break;
                         }
@@ -146,6 +160,10 @@ namespace DidactCore.Models.Blocks
             }
         }
 
+        /// <summary>
+        /// Asynchronously executes the delegate on a Task.
+        /// </summary>
+        /// <returns></returns>
         public async Task ExecuteAsync()
         {
             var timeoutTask = Task.Delay(SoftTimeout);
