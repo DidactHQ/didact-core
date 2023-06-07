@@ -3,7 +3,6 @@ using DidactCore.Models.Constants;
 using DidactCore.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DidactCore.Models.Blocks
