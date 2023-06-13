@@ -171,7 +171,7 @@ namespace DidactCore.Models.Blocks
 
             if (timeoutTask == await Task.WhenAny(delegateTask, timeoutTask))
             {
-                State = BlockState.Failed;
+                State = BlockState.Cancelling;
                 _logger.LogCritical("Action Block {name} exceeded its soft timeout threshold. Marking for cancellation...", Name);
                 SoftTimeoutExceeded = true;
             }

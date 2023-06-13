@@ -9,5 +9,6 @@
         public const string Failed = "Failed";
         public const string Succeeded = "Succeeded";
         public const string Cancelled = "Cancelled";
+        public const string Cancelling = "Cancelling";
     }
 }
