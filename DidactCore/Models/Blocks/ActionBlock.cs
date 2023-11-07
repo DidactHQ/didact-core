@@ -7,29 +7,83 @@ using System.Threading.Tasks;
 
 namespace DidactCore.Models.Blocks
 {
+    /// <summary>
+    /// A synchronous execution wrapper that takes an input of type T and returns no output.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ActionBlock<T>
     {
         private readonly ILogger _logger;
         private readonly IBlockRepository _blockRepository;
 
-        public Action<T> Action { get; set; }
+        /// <summary>
+        /// The executor of the block which is, specifically, an Action delegate with one input parameter T.
+        /// </summary>
+        public Action<T> Action { get; private set; }
 
-        public T Parameter { get; set; }
+        /// <summary>
+        /// The input parameter for the executor.
+        /// </summary>
+        public T Parameter { get; private set; }
 
-        public string Name { get; set; }
+        /// <summary>
+        /// <para>The name of the block.</para>
+        /// <para>This parameter is optional, but its use is highly recommended for convenience in logging and observability.</para>
+        /// </summary>
+        public string Name { get; private set; }
 
-        public string State { get; set; } = BlockState.Idle;
+        /// <summary>
+        /// <para>An internal property that represents the block's execution state, or BlockState.</para>
+        /// <para>This BlockState changes values appropriately as an execution attempt is made against the block.</para>
+        /// <para>Default value is Idle.</para>
+        /// </summary>
+        public string State { get; private set; } = BlockState.Idle;
 
-        public int RetryAttemptsThreshold { get; set; } = 0;
+        /// <summary>
+        /// <para>The maximum number of retry attempts allowed in case an execution attempt against the block throws an exception.</para>
+        /// <para>Default value is 0.</para>
+        /// </summary>
+        public int RetryAttemptsThreshold { get; private set; } = 0;
 
-        public int RetryDelayMilliseconds { get; set; }
+        /// <summary>
+        /// <para>A delay (in milliseconds) between retry attempts.</para>
+        /// <para>This is a constant value that is used between each retry attempt until the RetryAttemptsThreshold is met.</para>
+        /// <para>Default is 0.</para>
+        /// </summary>
+        public int RetryDelayMilliseconds { get; private set; } = 0;
 
-        public int SoftTimeout { get; set; }
+        /// <summary>
+        /// <para>
+        ///     A soft timeout (in milliseconds) to limit the elapsed execution time of the block.
+        /// </para>
+        /// <para>
+        ///     Notice the terminology here: this property is a soft timeout, meaning it will not force abort an execution.
+        ///     Rather, the block periodically checks for a SoftTimeout violation at various lifecycle events of the execution attempt.
+        /// </para>
+        /// <para>
+        ///     If a SoftTimeout violation occurs, the block is marked for cancellation and the BlockState is updated appropriately.
+        /// </para>
+        /// <para>
+        ///     Default is 3,600,000 milliseconds (1 hour).
+        /// </para>
+        /// </summary>
+        public int SoftTimeout { get; private set; } = 3600000;
 
+        /// <summary>
+        /// <para>
+        ///     An internal property that tracks the number of retries attempted.
+        /// </para>
+        /// <para>
+        ///     Default is 0.
+        /// </para>
+        /// </summary>
         public int RetriesAttempted { get; private set; } = 0;
 
         public int RuntimeMinutesElapsed { get; private set; }
 
+        /// <summary>
+        /// A boolean flag indicating whether the SoftTimeout has been violated or not.
+        /// </summary>
         public bool SoftTimeoutExceeded { get; private set; }
 
 
@@ -51,7 +105,7 @@ namespace DidactCore.Models.Blocks
         }
 
         /// <summary>
-        /// Sets the arguments for the delegate.
+        /// Sets the arguments for the executor (delegate).
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
