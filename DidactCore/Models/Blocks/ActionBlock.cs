@@ -79,8 +79,6 @@ namespace DidactCore.Models.Blocks
         /// </summary>
         public int RetriesAttempted { get; private set; } = 0;
 
-        public int RuntimeMinutesElapsed { get; private set; }
-
         /// <summary>
         /// A boolean flag indicating whether the SoftTimeout has been violated or not.
         /// </summary>
