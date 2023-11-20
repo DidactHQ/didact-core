@@ -5,6 +5,6 @@ namespace DidactCore.Repositories
 {
     public interface IFlowRepository
     {
-        Task SaveConfigurationsAsync(FlowConfigurator flowConfigurator);
+        Task SaveConfigurationsAsync(IFlowConfigurator flowConfigurator);
     }
 }
