@@ -5,7 +5,7 @@ namespace DidactCore.Models.Flows
     public interface IFlow
     {
         /// <summary>
-        /// Configures the name, description, triggers, inputs, and other metadata of the Flow.
+        /// Configures the name, description, queue designations, and other metadata of the Flow.
         /// </summary>
         /// <returns></returns>
         Task ConfigureAsync();
