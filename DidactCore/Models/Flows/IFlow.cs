@@ -8,7 +8,7 @@ namespace DidactCore.Models.Flows
         /// Configures the name, description, triggers, inputs, and other metadata of the Flow.
         /// </summary>
         /// <returns></returns>
-        Task ConfigureAsync(FlowConfigurator flowConfigurator);
+        Task ConfigureAsync(IFlowConfigurator flowConfigurator);
 
         /// <summary>
         /// Asynchronously executes the Flow.

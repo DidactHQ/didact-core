@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace DidactCore.Models.Flows
 {
-    public class FlowConfigurator
+    /// <summary>
+    /// <para>A helper class that configures important metadata for a Flow.</para>
+    /// <para>This class needs to be registered as a transient dependency in Didact Engine.</para>
+    /// </summary>
+    public class FlowConfigurator : IFlowConfigurator
     {
         private readonly ILogger _logger;
         private readonly IFlowRepository _flowRepository;
@@ -26,7 +30,7 @@ namespace DidactCore.Models.Flows
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public FlowConfigurator WithName(string name)
+        public IFlowConfigurator WithName(string name)
         {
             Name = name;
             return this;
@@ -37,7 +41,7 @@ namespace DidactCore.Models.Flows
         /// </summary>
         /// <param name="description"></param>
         /// <returns></returns>
-        public FlowConfigurator WithDescription(string description)
+        public IFlowConfigurator WithDescription(string description)
         {
             Description = description;
             return this;
@@ -59,7 +63,7 @@ namespace DidactCore.Models.Flows
             catch (Exception ex)
             {
                 _logger.LogError("Flow configurations were unable to be saved successfully. See inner exception: {ex}", ex);
-                var saveFlowConfigurationsException = new SaveFlowConfigurationsException("Flow configurations were unable to be saved successfully.", ex);
+                var saveFlowConfigurationsException = new SaveFlowConfigurationsException("Flow configurations were unable to be saved successfully. See inner exception.", ex);
                 throw saveFlowConfigurationsException;
             }
         }

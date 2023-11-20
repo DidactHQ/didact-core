@@ -1,29 +1,25 @@
 ﻿using DidactCore.Models.Flows;
-using DidactCore.Repositories;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace DidactCore
 {
-    private class SomeFlow : IFlow
+    public class SomeFlow : IFlow
     {
         private readonly ILogger _logger;
-        private readonly IFlowRepository _flowRepository;
 
-        public SomeFlow(ILogger logger, IFlowRepository flowRepository)
+        public SomeFlow(ILogger logger)
         {
             _logger = logger;
-            _flowRepository = flowRepository;
         }
 
-        public async Task ConfigureAsync()
+        public async Task ConfigureAsync(IFlowConfigurator flowConfigurator)
         {
-            var flowConfigurator = new FlowConfigurator();
             flowConfigurator
                 .WithName("A flow name.")
                 .WithDescription("A flow description");
 
-            await _flowRepository.SaveConfigurationsAsync(flowConfigurator).ConfigureAwait(false);
+            await flowConfigurator.SaveConfigurationsAsync().ConfigureAwait(false);
         }
 
         public async Task ExecuteAsync()
