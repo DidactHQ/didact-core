@@ -15,6 +15,10 @@ namespace DidactCore.Models.Flows
 
         public string Description { get; private set; }
 
+        public string QueueType { get; private set; }
+
+        public string QueueName { get; private set; }
+
         public FlowConfigurator(ILogger logger, IFlowRepository flowRepository)
         {
             _logger = logger;
@@ -30,6 +34,13 @@ namespace DidactCore.Models.Flows
         public IFlowConfigurator WithDescription(string description)
         {
             Description = description;
+            return this;
+        }
+
+        public IFlowConfigurator ForQueue(string queueType, string queueName)
+        {
+            QueueType = queueType;
+            QueueName = queueName;
             return this;
         }
 

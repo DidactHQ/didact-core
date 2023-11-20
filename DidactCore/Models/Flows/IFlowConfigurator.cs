@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using DidactCore.Models.Constants;
+using System.Threading.Tasks;
 
 namespace DidactCore.Models.Flows
 {
@@ -19,6 +20,16 @@ namespace DidactCore.Models.Flows
         string Description { get; }
 
         /// <summary>
+        /// The designated queue type that the Flow will execute against.
+        /// </summary>
+        string QueueType { get; }
+
+        /// <summary>
+        /// The designated queue that the Flow will execute against.
+        /// </summary>
+        string QueueName { get; }
+
+        /// <summary>
         /// Sets the Flow name.
         /// </summary>
         /// <param name="name"></param>
@@ -31,6 +42,14 @@ namespace DidactCore.Models.Flows
         /// <param name="description"></param>
         /// <returns></returns>
         IFlowConfigurator WithDescription(string description);
+
+        /// <summary>
+        /// Sets the Flow to execute for a specific queue type and queue.
+        /// </summary>
+        /// <param name="queueType"></param>
+        /// <param name="queueName"></param>
+        /// <returns></returns>
+        IFlowConfigurator ForQueue(string queueType, string queueName);
 
         /// <summary>
         /// Asynchronously saves the Flow configurations to persistent storage.
