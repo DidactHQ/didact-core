@@ -1,4 +1,5 @@
-﻿using DidactCore.Models.Flows;
+﻿using DidactCore.Models.Constants;
+using DidactCore.Models.Flows;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
@@ -19,7 +20,8 @@ namespace DidactCore
         {
             _flowConfigurator
                 .WithName("A flow name.")
-                .WithDescription("A flow description");
+                .WithDescription("A flow description")
+                .ForQueue(QueueTypes.StandardQueue, "Default");
 
             await _flowConfigurator.SaveConfigurationsAsync().ConfigureAwait(false);
         }
