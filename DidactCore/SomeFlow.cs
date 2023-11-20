@@ -7,19 +7,21 @@ namespace DidactCore
     public class SomeFlow : IFlow
     {
         private readonly ILogger _logger;
+        private readonly IFlowConfigurator _flowConfigurator;
 
-        public SomeFlow(ILogger logger)
+        public SomeFlow(ILogger logger, IFlowConfigurator flowConfigurator)
         {
             _logger = logger;
+            _flowConfigurator = flowConfigurator;
         }
 
-        public async Task ConfigureAsync(IFlowConfigurator flowConfigurator)
+        public async Task ConfigureAsync()
         {
-            flowConfigurator
+            _flowConfigurator
                 .WithName("A flow name.")
                 .WithDescription("A flow description");
 
-            await flowConfigurator.SaveConfigurationsAsync().ConfigureAwait(false);
+            await _flowConfigurator.SaveConfigurationsAsync().ConfigureAwait(false);
         }
 
         public async Task ExecuteAsync()
