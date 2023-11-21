@@ -1,6 +1,9 @@
-﻿using DidactCore.Models.Constants;
+﻿using DidactCore.Models.Blocks;
+using DidactCore.Models.Constants;
 using DidactCore.Models.Flows;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace DidactCore
@@ -9,11 +12,13 @@ namespace DidactCore
     {
         private readonly ILogger _logger;
         private readonly IFlowConfigurator _flowConfigurator;
+        private readonly IServiceProvider _serviceProvider;
 
-        public SomeFlow(ILogger logger, IFlowConfigurator flowConfigurator)
+        public SomeFlow(ILogger logger, IFlowConfigurator flowConfigurator, IServiceProvider serviceProvider)
         {
             _logger = logger;
             _flowConfigurator = flowConfigurator;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task ConfigureAsync()
@@ -28,6 +33,11 @@ namespace DidactCore
 
         public async Task ExecuteAsync()
         {
+            var actionBlock = ActivatorUtilities.CreateInstance<ActionBlock<string>>(_serviceProvider);
+            actionBlock
+                .WithName("Test block 1")
+                .WithRetries(3, 10000);
+
             _logger.LogInformation("A test log event from SomeFlow.");
             await Task.CompletedTask;
         }
