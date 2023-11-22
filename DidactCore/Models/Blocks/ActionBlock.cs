@@ -67,7 +67,7 @@ namespace DidactCore.Models.Blocks
         ///     Default is 3,600,000 milliseconds (1 hour).
         /// </para>
         /// </summary>
-        public int SoftTimeout { get; private set; } = 3600000;
+        public int SoftTimeoutMilliseconds { get; private set; } = 3600000;
 
         /// <summary>
         /// <para>
@@ -80,7 +80,7 @@ namespace DidactCore.Models.Blocks
         public int RetriesAttempted { get; private set; } = 0;
 
         /// <summary>
-        /// A boolean flag indicating whether the SoftTimeout has been violated or not.
+        /// A boolean flag indicating whether the SoftTimeoutMilliseconds has been violated or not.
         /// </summary>
         public bool SoftTimeoutExceeded { get; private set; }
 
@@ -130,9 +130,9 @@ namespace DidactCore.Models.Blocks
         /// </summary>
         /// <param name="softTimeoutThreshold"></param>
         /// <returns></returns>
-        public ActionBlock<T> WithSoftTimeout(int softTimeoutThreshold)
+        public ActionBlock<T> WithSoftTimeout(int softTimeoutMilliseconds)
         {
-            SoftTimeout = softTimeoutThreshold;
+            SoftTimeoutMilliseconds = softTimeoutMilliseconds;
             return this;
         }
 
@@ -218,7 +218,7 @@ namespace DidactCore.Models.Blocks
         /// <returns></returns>
         public async Task ExecuteAsync()
         {
-            var timeoutTask = Task.Delay(SoftTimeout);
+            var timeoutTask = Task.Delay(SoftTimeoutMilliseconds);
             var delegateTask = ExecuteDelegateAsync();
 
             if (timeoutTask == await Task.WhenAny(delegateTask, timeoutTask))
