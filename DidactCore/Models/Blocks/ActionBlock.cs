@@ -43,11 +43,11 @@ namespace DidactCore.Models.Blocks
         /// <para>The maximum number of retry attempts allowed in case an execution attempt against the block throws an exception.</para>
         /// <para>Default value is 0.</para>
         /// </summary>
-        public int RetryAttemptsThreshold { get; private set; } = 0;
+        public int MaxRetries { get; private set; } = 0;
 
         /// <summary>
         /// <para>A delay (in milliseconds) between retry attempts.</para>
-        /// <para>This is a constant value that is used between each retry attempt until the RetryAttemptsThreshold is met.</para>
+        /// <para>This is a constant value that is used between each retry attempt until the MaxRetries is met.</para>
         /// <para>Default is 0.</para>
         /// </summary>
         public int RetryDelayMilliseconds { get; private set; } = 0;
@@ -139,12 +139,12 @@ namespace DidactCore.Models.Blocks
         /// <summary>
         /// Sets the maximum number of retry attempts and the constant delay that should be used between each of them.
         /// </summary>
-        /// <param name="retryAttemptsThreshold"></param>
+        /// <param name="maxRetries"></param>
         /// <param name="retryDelayMilliseconds"></param>
         /// <returns></returns>
-        public ActionBlock<T> WithRetries(int retryAttemptsThreshold, int retryDelayMilliseconds)
+        public ActionBlock<T> WithRetries(int maxRetries, int retryDelayMilliseconds)
         {
-            RetryAttemptsThreshold = retryAttemptsThreshold;
+            MaxRetries = maxRetries;
             RetryDelayMilliseconds = retryDelayMilliseconds;
             return this;
         }
@@ -156,7 +156,7 @@ namespace DidactCore.Models.Blocks
                 throw new NullBlockExecutorException("The executor or its arguments were not properly satisfied.");
             }
 
-            while (RetriesAttempted <= RetryAttemptsThreshold)
+            while (RetriesAttempted <= MaxRetries)
             {
                 if (SoftTimeoutExceeded)
                 {
@@ -177,7 +177,7 @@ namespace DidactCore.Models.Blocks
                 {
                     RetriesAttempted++;
 
-                    if (RetriesAttempted <= RetryAttemptsThreshold)
+                    if (RetriesAttempted <= MaxRetries)
                     {
                         if (SoftTimeoutExceeded)
                         {
