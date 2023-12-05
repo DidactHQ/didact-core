@@ -19,6 +19,12 @@ namespace DidactCore.Models.Flows
 
         public string QueueName { get; private set; }
 
+        public string CronExpression { get; private set; }
+
+        public DateTime? StartDateTime { get; private set; }
+
+        public DateTime? EndDateTime { get; private set; }
+
         public FlowConfigurator(ILogger logger, IFlowRepository flowRepository)
         {
             _logger = logger;
@@ -41,6 +47,14 @@ namespace DidactCore.Models.Flows
         {
             QueueType = queueType;
             QueueName = queueName;
+            return this;
+        }
+
+        public IFlowConfigurator WithCronSchedule(string cronExpression, DateTime? startDateTime = null, DateTime? endDateTime = null)
+        {
+            CronExpression = cronExpression;
+            StartDateTime = startDateTime;
+            EndDateTime = endDateTime;
             return this;
         }
 
