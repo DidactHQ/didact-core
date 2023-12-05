@@ -74,10 +74,6 @@ namespace DidactCore.Models.Flows
         /// <para>
         ///     The schedule has an optional start datetime and end datetime.
         /// </para>
-        /// <para>
-        ///     If no values are provided, the respective minimum and maximum values will be used by default.
-        ///     This is the expected behaviour in any implementation of this interface.
-        /// </para>
         /// </summary>
         /// <param name="cronExpression"></param>
         /// <param name="startDateTime"></param>
