@@ -1,4 +1,5 @@
 ﻿using DidactCore.Exceptions;
+using DidactCore.Models.Constants;
 using DidactCore.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,9 +16,9 @@ namespace DidactCore.Models.Flows
 
         public string Description { get; private set; }
 
-        public string QueueType { get; private set; }
+        public string QueueType { get; private set; } = QueueTypes.HyperQueue;
 
-        public string QueueName { get; private set; }
+        public string QueueName { get; private set; } = "Default";
 
         public string CronExpression { get; private set; }
 
