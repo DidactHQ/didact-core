@@ -20,6 +20,8 @@ namespace DidactCore.Models.Flows
 
         public string QueueName { get; private set; } = "Default";
 
+        public TimeSpan? Delay { get; private set; } = null;
+
         public string CronExpression { get; private set; }
 
         public DateTime? StartDateTime { get; private set; }
@@ -48,6 +50,12 @@ namespace DidactCore.Models.Flows
         {
             QueueType = queueType;
             QueueName = queueName;
+            return this;
+        }
+
+        public IFlowConfigurator WithDelay(TimeSpan delay)
+        {
+            Delay = delay;
             return this;
         }
 
