@@ -36,6 +36,16 @@ namespace DidactCore.Models.Flows
         string CronExpression { get; }
 
         /// <summary>
+        /// The optional start datetime of the Flow's CRON schedule.
+        /// </summary>
+        DateTime? StartDateTime { get; }
+
+        /// <summary>
+        /// The optional end datetime of the Flow's CRON schedule.
+        /// </summary>
+        DateTime? EndDateTime { get; }
+
+        /// <summary>
         /// Sets the Flow name.
         /// </summary>
         /// <param name="name"></param>
