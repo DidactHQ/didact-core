@@ -32,6 +32,11 @@ namespace DidactCore.Models.Flows
         string QueueName { get; }
 
         /// <summary>
+        /// An optional delay when enqueuing the Flow. The delay is a TimeSpan object, so it should be easy to delay by seconds, minutes, hours, etc.
+        /// </summary>
+        TimeSpan? Delay { get; }
+
+        /// <summary>
         /// The CRON schedule for the Flow.
         /// </summary>
         string CronExpression { get; }
@@ -67,6 +72,13 @@ namespace DidactCore.Models.Flows
         /// <param name="queueName"></param>
         /// <returns></returns>
         IFlowConfigurator ForQueue(string queueType, string queueName);
+
+        /// <summary>
+        /// Sets a delay for the Flow when it is enqueued. The delay is a TimeSpan object, so it should be easy to delay by seconds, minutes, hours, etc.
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        IFlowConfigurator WithDelay(TimeSpan delay);
 
         /// <summary>
         /// <para>
