@@ -21,12 +21,13 @@ namespace DidactCore.Models.Flows
         string Description { get; }
 
         /// <summary>
-        /// The designated queue type that the Flow will execute against.
+        /// The designated queue type that the Flow will execute against. The default type is HyperQueue.
         /// </summary>
+        /// <see cref="QueueTypes.HyperQueue"/>
         string QueueType { get; }
 
         /// <summary>
-        /// The designated queue that the Flow will execute against.
+        /// The designated queue that the Flow will execute against. The default name is "default".
         /// </summary>
         string QueueName { get; }
 
