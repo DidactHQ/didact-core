@@ -1,4 +1,5 @@
 ﻿using DidactCore.Models.Constants;
+using System;
 using System.Threading.Tasks;
 
 namespace DidactCore.Models.Flows
@@ -30,6 +31,11 @@ namespace DidactCore.Models.Flows
         string QueueName { get; }
 
         /// <summary>
+        /// The CRON schedule for the Flow.
+        /// </summary>
+        string CronExpression { get; }
+
+        /// <summary>
         /// Sets the Flow name.
         /// </summary>
         /// <param name="name"></param>
@@ -50,6 +56,24 @@ namespace DidactCore.Models.Flows
         /// <param name="queueName"></param>
         /// <returns></returns>
         IFlowConfigurator ForQueue(string queueType, string queueName);
+
+        /// <summary>
+        /// <para>
+        ///     Sets a CRON schedule for the Flow.
+        /// </para>
+        /// <para>
+        ///     The schedule has an optional start datetime and end datetime.
+        /// </para>
+        /// <para>
+        ///     If no values are provided, the respective minimum and maximum values will be used by default.
+        ///     This is the expected behaviour in any implementation of this interface.
+        /// </para>
+        /// </summary>
+        /// <param name="cronExpression"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        /// <returns></returns>
+        IFlowConfigurator WithCronSchedule(string cronExpression, DateTime? startDateTime = null, DateTime? endDateTime = null);
 
         /// <summary>
         /// Asynchronously saves the Flow configurations to persistent storage.
