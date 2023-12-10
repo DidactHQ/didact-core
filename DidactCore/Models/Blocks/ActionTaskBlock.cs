@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace DidactCore.Models.Blocks
 {
-    public class ActionBlockAsync
+    public class ActionTaskBlock
     {
-        private readonly ILogger<ActionBlockAsync> _logger;
+        private readonly ILogger<ActionTaskBlock> _logger;
 
         public Func<Task> Executor { get; private set; }
         
-        public ActionBlockAsync(ILogger<ActionBlockAsync> logger)
+        public ActionTaskBlock(ILogger<ActionTaskBlock> logger)
         {
             _logger = logger;
         }
