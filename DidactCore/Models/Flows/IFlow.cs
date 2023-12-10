@@ -13,6 +13,7 @@ namespace DidactCore.Models.Flows
         /// <summary>
         /// Asynchronously executes the Flow.
         /// </summary>
+        /// <param name="jsonInputString"></param>
         /// <returns></returns>
         Task ExecuteAsync(string? jsonInputString = null);
     }
