@@ -31,7 +31,7 @@ namespace DidactCore
             await _flowConfigurator.SaveConfigurationsAsync().ConfigureAwait(false);
         }
 
-        public async Task ExecuteAsync(string jsonInputString)
+        public async Task ExecuteAsync(string? jsonInputString)
         {
             var actionBlock = ActivatorUtilities.CreateInstance<ActionBlock<string>>(_serviceProvider);
             actionBlock
