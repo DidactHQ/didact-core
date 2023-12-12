@@ -38,6 +38,14 @@ namespace DidactCore
                 .WithName("Test block 1")
                 .WithRetries(3, 10000);
 
+            var actionTaskBlock = ActivatorUtilities.CreateInstance<ActionTaskBlock>(_serviceProvider);
+            actionTaskBlock
+                .WithExecutor(async () =>
+                {
+                    _logger.LogInformation("Test log info {something}", x);
+                    await Task.Delay(1000).ConfigureAwait(false);
+                });
+
             await actionBlock.ExecuteAsync().ConfigureAwait(false);
 
             _logger.LogInformation("A test log event from SomeFlow.");
