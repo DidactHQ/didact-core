@@ -38,6 +38,8 @@ namespace DidactCore
                 .WithName("Test block 1")
                 .WithRetries(3, 10000);
 
+            await actionBlock.ExecuteAsync().ConfigureAwait(false);
+
             _logger.LogInformation("A test log event from SomeFlow.");
             await Task.CompletedTask;
         }
