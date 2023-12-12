@@ -20,5 +20,11 @@ namespace DidactCore.Models.Blocks
             _logger.LogInformation("Executing delegate...");
             await Executor.Invoke().ConfigureAwait(false);
         }
+
+        public ActionTaskBlock WithExecutor(Func<Task> executor)
+        {
+            Executor = executor;
+            return this;
+        }
     }
 }
