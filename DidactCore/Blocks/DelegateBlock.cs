@@ -1,5 +1,4 @@
-﻿using DidactCore.Repositories;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 
 namespace DidactCore.Blocks

@@ -1,4 +1,4 @@
-﻿namespace DidactCore.Repositories
+﻿namespace DidactCore.Blocks
 {
     public interface IBlockRepository
     {
