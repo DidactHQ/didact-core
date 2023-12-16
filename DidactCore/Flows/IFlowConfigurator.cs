@@ -1,4 +1,4 @@
-﻿using DidactCore.Models.Constants;
+﻿using DidactCore.Constants;
 using System;
 using System.Threading.Tasks;
 

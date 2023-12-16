@@ -1,4 +1,4 @@
-﻿namespace DidactCore.Models.Constants
+﻿namespace DidactCore.Constants
 {
     public static class BlockState
     {

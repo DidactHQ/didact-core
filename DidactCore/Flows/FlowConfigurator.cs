@@ -1,5 +1,5 @@
-﻿using DidactCore.Exceptions;
-using DidactCore.Models.Constants;
+﻿using DidactCore.Constants;
+using DidactCore.Exceptions;
 using DidactCore.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
