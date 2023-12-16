@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace DidactCore.Models.Flows
+namespace DidactCore.Flows
 {
     /// <summary>
     /// <para>A helper interface that configures Flow metadata.</para>

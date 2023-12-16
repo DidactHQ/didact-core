@@ -1,4 +1,4 @@
-﻿using DidactCore.Models.Flows;
+﻿using DidactCore.Flows;
 using System.Threading.Tasks;
 
 namespace DidactCore.Repositories

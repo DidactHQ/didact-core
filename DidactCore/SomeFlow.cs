@@ -1,6 +1,6 @@
 ﻿using DidactCore.Blocks;
+using DidactCore.Flows;
 using DidactCore.Models.Constants;
-using DidactCore.Models.Flows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace DidactCore.Models.Flows
+namespace DidactCore.Flows
 {
     public interface IFlowInput
     {
