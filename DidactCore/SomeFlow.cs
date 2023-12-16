@@ -1,4 +1,4 @@
-﻿using DidactCore.Models.Blocks;
+﻿using DidactCore.Blocks;
 using DidactCore.Models.Constants;
 using DidactCore.Models.Flows;
 using Microsoft.Extensions.DependencyInjection;

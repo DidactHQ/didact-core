@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace DidactCore.Models.Blocks
+namespace DidactCore.Blocks
 {
     /// <summary>
     ///     <para>

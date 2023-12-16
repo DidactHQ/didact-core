@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace DidactCore.Models.Blocks
+namespace DidactCore.Blocks
 {
     /// <summary>
     /// A synchronous execution wrapper that takes an input of type T and returns no output.

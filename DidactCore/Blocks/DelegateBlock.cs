@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace DidactCore.Models.Blocks
+namespace DidactCore.Blocks
 {
     public class DelegateBlock
     {

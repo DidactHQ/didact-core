@@ -2,14 +2,14 @@
 using System;
 using System.Threading.Tasks;
 
-namespace DidactCore.Models.Blocks
+namespace DidactCore.Blocks
 {
     public class ActionTaskBlock
     {
         private readonly ILogger<ActionTaskBlock> _logger;
 
         public Func<Task> Executor { get; private set; }
-        
+
         public ActionTaskBlock(ILogger<ActionTaskBlock> logger)
         {
             _logger = logger;
