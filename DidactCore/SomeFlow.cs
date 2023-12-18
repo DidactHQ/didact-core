@@ -42,7 +42,6 @@ namespace DidactCore
             actionTaskBlock
                 .WithExecutor(async () =>
                 {
-                    _logger.LogInformation("Test log info {something}", x);
                     await Task.Delay(1000).ConfigureAwait(false);
                 });
 
