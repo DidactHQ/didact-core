@@ -14,6 +14,13 @@ namespace DidactCore.Flows
         Task SaveConfigurationsAsync(IFlowConfigurator flowConfigurator);
 
         /// <summary>
+        /// Asynchronously retrieves a Flow from persistent storage by its primary key.
+        /// </summary>
+        /// <param name="flowId"></param>
+        /// <returns></returns>
+        Task<IFlow> GetFlowByIdAsync(long flowId);
+
+        /// <summary>
         /// Asynchronously retrieves all Flows previously saved to persistent storage.
         /// </summary>
         /// <returns></returns>
