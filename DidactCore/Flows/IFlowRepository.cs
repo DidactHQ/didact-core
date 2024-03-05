@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DidactCore.Flows
 {
@@ -11,5 +12,11 @@ namespace DidactCore.Flows
         /// <see cref="IFlowConfigurator"/>
         /// <returns></returns>
         Task SaveConfigurationsAsync(IFlowConfigurator flowConfigurator);
+
+        /// <summary>
+        /// Asynchronously retrieves all Flows previously saved to persistent storage.
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<IFlow>> GetAllFlowsFromStorageAsync();
     }
 }
