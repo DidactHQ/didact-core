@@ -5,7 +5,7 @@ namespace DidactCore.Flows
     public interface IFlow
     {
         /// <summary>
-        /// Configures the name, description, queue designations, and other metadata of the Flow.
+        /// Configures the Flow metadata to be saved to persistent storage.
         /// </summary>
         /// <returns></returns>
         Task ConfigureAsync();
