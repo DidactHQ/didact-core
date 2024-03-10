@@ -1,4 +1,7 @@
-﻿namespace DidactEngine.Models.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace DidactCore.Entities
 {
     public class State
     {

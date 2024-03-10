@@ -1,4 +1,6 @@
-﻿namespace DidactEngine.Models.Entities
+﻿using System;
+
+namespace DidactCore.Entities
 {
     public class Engine
     {
