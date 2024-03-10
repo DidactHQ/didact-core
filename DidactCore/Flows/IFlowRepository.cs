@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DidactCore.Entities;
 
 namespace DidactCore.Flows
 {
@@ -18,26 +19,26 @@ namespace DidactCore.Flows
         /// </summary>
         /// <param name="flowId"></param>
         /// <returns></returns>
-        Task<IFlow> GetFlowByIdAsync(long flowId);
+        Task<Flow> GetFlowByIdAsync(long flowId);
 
         /// <summary>
         /// Asynchronously retrieves a Flow from persistent storage by its Type name.
         /// </summary>
         /// <param name="flowTypeName"></param>
         /// <returns></returns>
-        Task<IFlow> GetFlowByTypeNameAsync(string flowTypeName);
+        Task<Flow> GetFlowByTypeNameAsync(string flowTypeName);
 
         /// <summary>
         /// Asynchronously retrieves a Flow from persistent storage by its name.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        Task<IFlow> GetFlowByNameAsync(string name);
+        Task<Flow> GetFlowByNameAsync(string name);
 
         /// <summary>
         /// Asynchronously retrieves all Flows previously saved to persistent storage.
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<IFlow>> GetAllFlowsFromStorageAsync();
+        Task<IEnumerable<Flow>> GetAllFlowsFromStorageAsync();
     }
 }
