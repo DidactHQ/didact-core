@@ -47,5 +47,19 @@ namespace DidactCore.Flows
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Flow>> GetAllFlowsFromStorageAsync();
+
+        /// <summary>
+        /// Asynchronously deactivates a Flow in persistent storage by its primary key.
+        /// </summary>
+        /// <param name="flowId"></param>
+        /// <returns></returns>
+        Task DeactivateFlowByIdAsync(long flowId);
+
+        /// <summary>
+        /// Asynchronously activates a Flow in persistent storage by its primary key.
+        /// </summary>
+        /// <param name="flowId"></param>
+        /// <returns></returns>
+        Task ActivateFlowByIdAsync(long flowId);
     }
 }
