@@ -21,11 +21,11 @@ namespace DidactCore.Flows
         Task<IFlow> GetFlowByIdAsync(long flowId);
 
         /// <summary>
-        /// Asynchronously retrieves a Flow from persistent storage by its FullyQualifiedType name.
+        /// Asynchronously retrieves a Flow from persistent storage by its Type name.
         /// </summary>
-        /// <param name="fullyQualifiedTypeName"></param>
+        /// <param name="flowTypeName"></param>
         /// <returns></returns>
-        Task<IFlow> GetFlowByFullyQualifiedTypeNameAsync(string fullyQualifiedTypeName);
+        Task<IFlow> GetFlowByTypeNameAsync(string flowTypeName);
 
         /// <summary>
         /// Asynchronously retrieves a Flow from persistent storage by its name.
