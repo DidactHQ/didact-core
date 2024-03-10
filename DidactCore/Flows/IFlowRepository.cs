@@ -36,6 +36,13 @@ namespace DidactCore.Flows
         Task<Flow> GetFlowByNameAsync(string name);
 
         /// <summary>
+        /// Asynchronously retrieves all Flows from persistent storage by the given organization primary key.
+        /// </summary>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Flow>> GetAllOrganizationFlowsFromStorageAsync(int organizationId);
+
+        /// <summary>
         /// Asynchronously retrieves all Flows previously saved to persistent storage.
         /// </summary>
         /// <returns></returns>
