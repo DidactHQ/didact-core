@@ -15,7 +15,7 @@ namespace DidactCore.Flows
 
         public string Description { get; private set; }
 
-        public string FullyQualifiedTypeName { get; private set; }
+        public string TypeName { get; private set; }
 
         public string QueueType { get; private set; } = QueueTypes.HyperQueue;
 
@@ -47,9 +47,9 @@ namespace DidactCore.Flows
             return this;
         }
 
-        public IFlowConfigurator WithFullyQualifiedTypeName(string fullyQualifiedTypeName)
+        public IFlowConfigurator WithTypeName(string typeName)
         {
-            FullyQualifiedTypeName = fullyQualifiedTypeName;
+            TypeName = typeName;
             return this;
         }
 

@@ -21,9 +21,9 @@ namespace DidactCore.Flows
         string Description { get; }
 
         /// <summary>
-        /// The Flow's FullyQualifiedType name.
+        /// The Flow's Type name.
         /// </summary>
-        string FullyQualifiedTypeName { get; }
+        string TypeName { get; }
 
         /// <summary>
         /// The designated queue type that the Flow will execute against. The default type is HyperQueue.
@@ -71,11 +71,11 @@ namespace DidactCore.Flows
         IFlowConfigurator WithDescription(string description);
 
         /// <summary>
-        /// Sets the Flow FullyQualifiedType name.
+        /// Sets the Flow Type name.
         /// </summary>
-        /// <param name="fullyQualifiedTypeName"></param>
+        /// <param name="typeName"></param>
         /// <returns></returns>
-        IFlowConfigurator WithFullyQualifiedTypeName(string fullyQualifiedTypeName);
+        IFlowConfigurator WithTypeName(string typeName);
 
         /// <summary>
         /// Sets the Flow to execute for a specific queue type and queue.
