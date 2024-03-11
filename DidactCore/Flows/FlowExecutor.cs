@@ -37,5 +37,18 @@ namespace DidactCore.Flows
 
             return iflow;
         }
+
+        public async Task ExecuteFlowInstanceAsync(IFlow flowInstance, Flow flow)
+        {
+            var flowId = flow.FlowId;
+            try
+            {
+                await flowInstance.ExecuteAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }
