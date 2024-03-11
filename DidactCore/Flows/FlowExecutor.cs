@@ -10,11 +10,13 @@ namespace DidactCore.Flows
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IFlowRepository _flowRepository;
+        private readonly IFlowLogger _flowLogger;
 
-        public FlowExecutor(IServiceProvider serviceProvider, IFlowRepository flowRepository)
+        public FlowExecutor(IServiceProvider serviceProvider, IFlowRepository flowRepository, IFlowLogger flowLogger)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _flowRepository = flowRepository ?? throw new ArgumentNullException(nameof(flowRepository));
+            _flowLogger = flowLogger ?? throw new ArgumentNullException(nameof(flowLogger));
         }
 
         public async Task<IFlow> CreateFlowInstanceAsync(Flow flow)
@@ -47,7 +49,7 @@ namespace DidactCore.Flows
             }
             catch (Exception ex)
             {
-
+                
             }
         }
     }
