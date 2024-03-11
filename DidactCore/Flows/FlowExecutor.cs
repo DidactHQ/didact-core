@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DidactCore.Flows
 {
-    public class FlowReflector : IFlowReflector
+    public class FlowExecutor : IFlowExecutor
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IFlowRepository _flowRepository;
 
-        public FlowReflector(IServiceProvider serviceProvider, IFlowRepository flowRepository)
+        public FlowExecutor(IServiceProvider serviceProvider, IFlowRepository flowRepository)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _flowRepository = flowRepository ?? throw new ArgumentNullException(nameof(flowRepository));

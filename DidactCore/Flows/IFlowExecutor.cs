@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace DidactCore.Flows
 {
-    public interface IFlowReflector
+    public interface IFlowExecutor
     {
         /// <summary>
         /// Retrieves the Flow type from the AppDomain's assemblies using reflection
