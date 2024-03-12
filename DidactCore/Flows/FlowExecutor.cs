@@ -1,4 +1,5 @@
-﻿using DidactCore.Entities;
+﻿using DidactCore.Dtos;
+using DidactCore.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace DidactCore.Flows
             _flowLogger = flowLogger ?? throw new ArgumentNullException(nameof(flowLogger));
         }
 
-        public async Task<IFlow> CreateFlowInstanceAsync(Flow flow)
+        public async Task<FlowInstanceDto> CreateFlowInstanceAsync(Flow flow)
         {
             // Traverse the AppDomain's assemblies to get the type.
             // Remember that .NET 5+ only has 1 AppDomain going forward, so CurrentDomain is sufficient.
@@ -37,15 +38,21 @@ namespace DidactCore.Flows
             var iflow = ActivatorUtilities.CreateInstance(_serviceProvider, flowType) as IFlow
                 ?? throw new NullReferenceException();
 
-            return iflow;
+            var flowInstanceDto = new FlowInstanceDto()
+            {
+                Flow = flow,
+                FlowInstance = iflow
+            };
+
+            return flowInstanceDto;
         }
 
-        public async Task ExecuteFlowInstanceAsync(IFlow flowInstance, Flow flow)
+        public async Task ExecuteFlowInstanceAsync(FlowInstanceDto flowInstanceDto)
         {
-            var flowId = flow.FlowId;
+            var flowId = flowInstanceDto.Flow.FlowId;
             try
             {
-                await flowInstance.ExecuteAsync();
+                await flowInstanceDto.FlowInstance.ExecuteAsync();
             }
             catch (Exception ex)
             {

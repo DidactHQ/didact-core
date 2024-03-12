@@ -1,4 +1,5 @@
-﻿using DidactCore.Entities;
+﻿using DidactCore.Dtos;
+using DidactCore.Entities;
 using System.Threading.Tasks;
 
 namespace DidactCore.Flows
@@ -11,14 +12,13 @@ namespace DidactCore.Flows
         /// </summary>
         /// <param name="flow"></param>
         /// <returns></returns>
-        Task<IFlow> CreateFlowInstanceAsync(Flow flow);
+        Task<FlowInstanceDto> CreateFlowInstanceAsync(Flow flow);
 
         /// <summary>
         /// Asynchronously executes the IFlow instance by running its ExecuteAsync method and utilizing its Flow metadata.
         /// </summary>
-        /// <param name="flowInstance"></param>
-        /// <param name="flow"></param>
+        /// <param name="flowInstanceDto"></param>
         /// <returns></returns>
-        Task ExecuteFlowInstanceAsync(IFlow flowInstance, Flow flow);
+        Task ExecuteFlowInstanceAsync(FlowInstanceDto flowInstanceDto);
     }
 }
