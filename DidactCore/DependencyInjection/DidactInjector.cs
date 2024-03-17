@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 
 namespace DidactCore.DependencyInjection
@@ -7,15 +8,15 @@ namespace DidactCore.DependencyInjection
     {
         public IServiceCollection ApplicationServiceCollection { get; set; }
 
-        public IServiceCollection InjectorServiceCollection { get; set; }
+        public IServiceCollection MasterServiceCollection { get; set; }
 
-        public IServiceProvider InjectorServiceProvider { get; set; }
+        public IServiceProvider MasterServiceProvider { get; set; }
 
         public DidactInjector(IServiceCollection applicationServiceCollection)
         {
             ApplicationServiceCollection = applicationServiceCollection;
-            InjectorServiceCollection = applicationServiceCollection;
-            InjectorServiceProvider = InjectorServiceCollection.BuildServiceProvider();
+            MasterServiceCollection = applicationServiceCollection;
+            MasterServiceProvider = MasterServiceCollection.BuildServiceProvider();
         }
 
         /// <summary>
@@ -23,8 +24,8 @@ namespace DidactCore.DependencyInjection
         /// </summary>
         public void ResetServiceCollection()
         {
-            InjectorServiceCollection.Clear();
-            InjectorServiceCollection = ApplicationServiceCollection;
+            MasterServiceCollection.Clear();
+            MasterServiceCollection = ApplicationServiceCollection;
         }
 
         /// <summary>
@@ -36,10 +37,10 @@ namespace DidactCore.DependencyInjection
         {
             foreach (var service in bridgeServiceCollection)
             {
-                InjectorServiceCollection.Add(service);
+                MasterServiceCollection.TryAdd(service);
             }
 
-            InjectorServiceProvider = InjectorServiceCollection.BuildServiceProvider();
+            MasterServiceProvider = MasterServiceCollection.BuildServiceProvider();
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace DidactCore.DependencyInjection
         /// </summary>
         public void BuildServiceCollection()
         {
-            InjectorServiceProvider = InjectorServiceCollection.BuildServiceProvider();
+            MasterServiceProvider = MasterServiceCollection.BuildServiceProvider();
         }
     }
 }
