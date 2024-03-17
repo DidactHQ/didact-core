@@ -27,9 +27,19 @@ namespace DidactCore.DependencyInjection
             InjectorServiceCollection = ApplicationServiceCollection;
         }
 
-        public void AddServiceCollection(IServiceCollection enhancedServiceCollection)
+        /// <summary>
+        /// Adds each service from the bridgeServiceCollection to the InjectorServiceCollection,
+        /// then rebuilds the InjectorServiceCollection.
+        /// </summary>
+        /// <param name="bridgeServiceCollection"></param>
+        public void AddAndRebuildServiceCollection(IServiceCollection bridgeServiceCollection)
         {
-            InjectorServiceCollection = enhancedServiceCollection;
+            foreach (var service in bridgeServiceCollection)
+            {
+                InjectorServiceCollection.Add(service);
+            }
+
+            InjectorServiceProvider = InjectorServiceCollection.BuildServiceProvider();
         }
 
         /// <summary>
