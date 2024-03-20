@@ -4,7 +4,7 @@ using System;
 
 namespace DidactCore.DependencyInjection
 {
-    public class DidactInjector
+    public class DidactDependencyInjector
     {
         public IServiceCollection ApplicationServiceCollection { get; set; }
 
@@ -12,7 +12,7 @@ namespace DidactCore.DependencyInjection
 
         public IServiceProvider FlowServiceProvider { get; set; }
 
-        public DidactInjector(IServiceCollection applicationServiceCollection)
+        public DidactDependencyInjector(IServiceCollection applicationServiceCollection)
         {
             ApplicationServiceCollection = applicationServiceCollection;
             FlowServiceCollection = applicationServiceCollection;
