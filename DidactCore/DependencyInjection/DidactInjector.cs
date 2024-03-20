@@ -8,15 +8,15 @@ namespace DidactCore.DependencyInjection
     {
         public IServiceCollection ApplicationServiceCollection { get; set; }
 
-        public IServiceCollection MasterServiceCollection { get; set; }
+        public IServiceCollection FlowServiceCollection { get; set; }
 
-        public IServiceProvider MasterServiceProvider { get; set; }
+        public IServiceProvider FlowServiceProvider { get; set; }
 
         public DidactInjector(IServiceCollection applicationServiceCollection)
         {
             ApplicationServiceCollection = applicationServiceCollection;
-            MasterServiceCollection = applicationServiceCollection;
-            MasterServiceProvider = MasterServiceCollection.BuildServiceProvider();
+            FlowServiceCollection = applicationServiceCollection;
+            FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
         }
 
         /// <summary>
@@ -24,8 +24,8 @@ namespace DidactCore.DependencyInjection
         /// </summary>
         public void ResetServiceCollection()
         {
-            MasterServiceCollection.Clear();
-            MasterServiceCollection = ApplicationServiceCollection;
+            FlowServiceCollection.Clear();
+            FlowServiceCollection = ApplicationServiceCollection;
         }
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace DidactCore.DependencyInjection
         {
             foreach (var service in bridgeServiceCollection)
             {
-                MasterServiceCollection.TryAdd(service);
+                FlowServiceCollection.TryAdd(service);
             }
 
-            MasterServiceProvider = MasterServiceCollection.BuildServiceProvider();
+            FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace DidactCore.DependencyInjection
         /// </summary>
         public void BuildServiceCollection()
         {
-            MasterServiceProvider = MasterServiceCollection.BuildServiceProvider();
+            FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
         }
     }
 }
