@@ -32,5 +32,25 @@ namespace DidactCore.DependencyInjection
         /// </summary>
         /// <param name="bridgeServiceCollection"></param>
         void AddAndRebuildServiceCollection(IServiceCollection bridgeServiceCollection);
+
+        /// <summary>
+        /// A wrapper function for the <see cref="ActivatorUtilities.CreateInstance{T}(IServiceProvider, object[])"/> method
+        /// from the .NET dependency injection library that uses the <see cref="FlowServiceProvider"/>
+        /// as the default <see cref="IServiceProvider"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        T CreateInstance<T>(params object[] parameters);
+
+        /// <summary>
+        /// A wrapper function for the <see cref="ActivatorUtilities.CreateInstance(IServiceProvider, Type, object[])"/> method
+        /// from the .NET dependency injection library that uses the <see cref="FlowServiceProvider"/>
+        /// as the default <see cref="IServiceProvider"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        object CreateInstance(Type type, params object[] parameters);
     }
 }

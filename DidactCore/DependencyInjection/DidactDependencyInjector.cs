@@ -34,5 +34,15 @@ namespace DidactCore.DependencyInjection
 
             FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
         }
+
+        public T CreateInstance<T>(params object[] parameters)
+        {
+            return ActivatorUtilities.CreateInstance<T>(FlowServiceProvider, parameters);
+        }
+
+        public object CreateInstance(Type type, params object[] parameters)
+        {
+            return ActivatorUtilities.CreateInstance(FlowServiceProvider, type, parameters);
+        }
     }
 }
