@@ -4,7 +4,7 @@ using System;
 
 namespace DidactCore.DependencyInjection
 {
-    public class DidactDependencyInjector
+    public class DidactDependencyInjector : IDidactDependencyInjector
     {
         public IServiceCollection ApplicationServiceCollection { get; set; }
 
@@ -19,20 +19,12 @@ namespace DidactCore.DependencyInjection
             FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
         }
 
-        /// <summary>
-        /// Clears the InjectorServiceCollection and resets it to the ApplicationServiceCollection.
-        /// </summary>
         public void ResetServiceCollection()
         {
             FlowServiceCollection.Clear();
             FlowServiceCollection = ApplicationServiceCollection;
         }
 
-        /// <summary>
-        /// Adds each service from the bridgeServiceCollection to the InjectorServiceCollection,
-        /// then rebuilds the InjectorServiceCollection.
-        /// </summary>
-        /// <param name="bridgeServiceCollection"></param>
         public void AddAndRebuildServiceCollection(IServiceCollection bridgeServiceCollection)
         {
             foreach (var service in bridgeServiceCollection)
@@ -40,14 +32,6 @@ namespace DidactCore.DependencyInjection
                 FlowServiceCollection.TryAdd(service);
             }
 
-            FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
-        }
-
-        /// <summary>
-        /// Builds the InjectorServiceCollection into an IServiceProvider.
-        /// </summary>
-        public void BuildServiceCollection()
-        {
             FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
         }
     }
