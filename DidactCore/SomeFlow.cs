@@ -1,24 +1,22 @@
 ﻿using DidactCore.Blocks;
 using DidactCore.Constants;
+using DidactCore.DependencyInjection;
 using DidactCore.Flows;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Threading.Tasks;
 
 namespace DidactCore
 {
     public class SomeFlow : IFlow
     {
-        private readonly ILogger _logger;
+        private readonly IFlowLogger _flowLogger;
         private readonly IFlowConfigurator _flowConfigurator;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IDidactDependencyInjector _didactDependencyInjector;
 
-        public SomeFlow(ILogger logger, IFlowConfigurator flowConfigurator, IServiceProvider serviceProvider)
+        public SomeFlow(IFlowLogger flowLogger, IFlowConfigurator flowConfigurator, IDidactDependencyInjector didactDependencyInjector)
         {
-            _logger = logger;
+            _flowLogger = flowLogger;
             _flowConfigurator = flowConfigurator;
-            _serviceProvider = serviceProvider;
+            _didactDependencyInjector = didactDependencyInjector;
         }
 
         public async Task ConfigureAsync()
@@ -29,26 +27,24 @@ namespace DidactCore
                 .WithTypeName(GetType().Name)
                 .ForQueue(QueueTypes.HyperQueue, "Default");
 
-            await _flowConfigurator.SaveConfigurationsAsync().ConfigureAwait(false);
+            await _flowConfigurator.SaveConfigurationsAsync();
         }
 
         public async Task ExecuteAsync(string? jsonInputString)
         {
-            var actionBlock = ActivatorUtilities.CreateInstance<ActionBlock<string>>(_serviceProvider);
+            var actionBlock = _didactDependencyInjector.CreateInstance<ActionBlock<string>>();
             actionBlock
                 .WithName("Test block 1")
                 .WithRetries(3, 10000);
 
-            var actionTaskBlock = ActivatorUtilities.CreateInstance<ActionTaskBlock>(_serviceProvider);
+            var actionTaskBlock = _didactDependencyInjector.CreateInstance<ActionTaskBlock>();
             actionTaskBlock
                 .WithExecutor(async () =>
                 {
-                    await Task.Delay(1000).ConfigureAwait(false);
+                    await Task.Delay(1000);
                 });
 
-            await actionBlock.ExecuteAsync().ConfigureAwait(false);
-
-            _logger.LogInformation("A test log event from SomeFlow.");
+            await actionBlock.ExecuteAsync();            
             await Task.CompletedTask;
         }
     }
