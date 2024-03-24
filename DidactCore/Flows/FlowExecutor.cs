@@ -1,6 +1,6 @@
-﻿using DidactCore.Dtos;
+﻿using DidactCore.DependencyInjection;
+using DidactCore.Dtos;
 using DidactCore.Entities;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,13 +9,13 @@ namespace DidactCore.Flows
 {
     public class FlowExecutor : IFlowExecutor
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IDidactDependencyInjector _didactDependencyInjector;
         private readonly IFlowRepository _flowRepository;
         private readonly IFlowLogger _flowLogger;
 
-        public FlowExecutor(IServiceProvider serviceProvider, IFlowRepository flowRepository, IFlowLogger flowLogger)
+        public FlowExecutor(IDidactDependencyInjector didactDependencyInjector, IFlowRepository flowRepository, IFlowLogger flowLogger)
         {
-            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            _didactDependencyInjector = didactDependencyInjector ?? throw new ArgumentNullException(nameof(didactDependencyInjector));
             _flowRepository = flowRepository ?? throw new ArgumentNullException(nameof(flowRepository));
             _flowLogger = flowLogger ?? throw new ArgumentNullException(nameof(flowLogger));
         }
@@ -35,7 +35,7 @@ namespace DidactCore.Flows
 
             // Create an instance of the type using the dependency injection system.
             // Then safe cast to an IFlow.
-            var iflow = ActivatorUtilities.CreateInstance(_serviceProvider, flowType) as IFlow
+            var iflow = _didactDependencyInjector.CreateInstance(flowType) as IFlow
                 ?? throw new NullReferenceException();
 
             var flowInstanceDto = new FlowInstanceDto()
