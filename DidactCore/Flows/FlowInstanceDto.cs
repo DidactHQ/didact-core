@@ -1,7 +1,6 @@
 ﻿using DidactCore.Entities;
-using DidactCore.Flows;
 
-namespace DidactCore.Dtos
+namespace DidactCore.Flows
 {
     public class FlowInstanceDto
     {
