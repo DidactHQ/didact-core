@@ -5,10 +5,14 @@ namespace DidactCore.Flows
 {
     public interface IFlowRunRepository
     {
-        Task<FlowRun> GetFlowRunByIdAsync(long flowRunId);
+        Task<FlowRun> GetFlowRunAsync(long flowRunId);
 
         Task<FlowRun> CreateAndEnqueueFlowRunAsync(FlowRun flowRun);
 
         Task<FlowRun> CreateAndExecuteFlowRunAsync(FlowRun flowRun);
+
+        Task<FlowRun> UpdateFlowRunAsync(FlowRun flowRun);
+
+        Task DeleteFlowRunAsync(long flowRunId);
     }
 }
