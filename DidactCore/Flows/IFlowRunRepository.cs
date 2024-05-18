@@ -7,11 +7,15 @@ namespace DidactCore.Flows
     {
         Task<FlowRun> GetFlowRunAsync(long flowRunId);
 
+        Task<FlowRun> GetFlowRunByNameAsync(string name);
+
+        Task<FlowRun> GetFlowRunByDescriptionAsync(string description);
+
         Task<FlowRun> CreateAndEnqueueFlowRunAsync(FlowRun flowRun);
 
         Task<FlowRun> CreateAndExecuteFlowRunAsync(FlowRun flowRun);
 
-        Task<FlowRun> UpdateFlowRunAsync(FlowRun flowRun);
+        Task<FlowRun> UpdateFlowRunAsync(long flowRunId, FlowRun flowRun);
 
         Task DeleteFlowRunAsync(long flowRunId);
     }
