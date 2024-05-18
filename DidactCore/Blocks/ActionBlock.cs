@@ -36,7 +36,7 @@ namespace DidactCore.Blocks
         /// <para>This BlockState changes values appropriately as an execution attempt is made against the block.</para>
         /// <para>Default value is Idle.</para>
         /// </summary>
-        public string State { get; private set; } = BlockState.Idle;
+        public string State { get; private set; } = BlockStates.Idle;
 
         /// <summary>
         /// <para>The maximum number of retry attempts allowed in case an execution attempt against the block throws an exception.</para>
@@ -159,17 +159,17 @@ namespace DidactCore.Blocks
             {
                 if (SoftTimeoutExceeded)
                 {
-                    State = BlockState.Cancelled;
+                    State = BlockStates.Cancelled;
                     _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                     break;
                 }
 
                 try
                 {
-                    State = BlockState.Running;
+                    State = BlockStates.Running;
                     _logger.LogInformation("Action Block {name} executing delegate...", Name);
                     Action(Parameter);
-                    State = BlockState.Succeeded;
+                    State = BlockStates.Succeeded;
                     break;
                 }
                 catch (Exception ex)
@@ -180,21 +180,21 @@ namespace DidactCore.Blocks
                     {
                         if (SoftTimeoutExceeded)
                         {
-                            State = BlockState.Cancelled;
+                            State = BlockStates.Cancelled;
                             _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                             break;
                         }
 
-                        State = BlockState.Failing;
+                        State = BlockStates.Failing;
                         _logger.LogError("Action Block {name} encountered an unhandled exception. See details: {ex}", Name, ex.Message);
                         _logger.LogInformation("Action Block {name} awaiting retry delay...", Name);
                         await Task.Delay(RetryDelayMilliseconds);
-                        State = BlockState.Retrying;
+                        State = BlockStates.Retrying;
                         _logger.LogInformation("Action Block {name} attempting retry...", Name);
 
                         if (SoftTimeoutExceeded)
                         {
-                            State = BlockState.Cancelled;
+                            State = BlockStates.Cancelled;
                             _logger.LogInformation("The soft timeout threshold has been exceeded. Cancelling execution...");
                             break;
                         }
@@ -203,7 +203,7 @@ namespace DidactCore.Blocks
                     }
                     else
                     {
-                        State = BlockState.Failed;
+                        State = BlockStates.Failed;
                         _logger.LogCritical("Action Block {name} has encountered an unhandled exception and has now failed. See details: {ex}", Name, ex.Message);
                         throw;
                     }
@@ -222,7 +222,7 @@ namespace DidactCore.Blocks
 
             if (timeoutTask == await Task.WhenAny(delegateTask, timeoutTask))
             {
-                State = BlockState.Cancelling;
+                State = BlockStates.Cancelling;
                 _logger.LogCritical("Action Block {name} exceeded its soft timeout threshold. Marking for cancellation...", Name);
                 SoftTimeoutExceeded = true;
             }
