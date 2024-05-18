@@ -2,7 +2,8 @@
 {
     public static class TriggerTypes
     {
-        public const string Manual = "Manual";
+        public const string API = "API";
         public const string Scheduled = "Scheduled";
+        public const string ParentFlow = "Parent Flow";
     }
 }
