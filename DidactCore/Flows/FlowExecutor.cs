@@ -1,7 +1,7 @@
 ﻿using DidactCore.DependencyInjection;
-using DidactCore.Dtos;
 using DidactCore.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +25,9 @@ namespace DidactCore.Flows
             // Traverse the AppDomain's assemblies to get the type.
             // Remember that .NET 5+ only has 1 AppDomain going forward, so CurrentDomain is sufficient.
             var flowType = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes()).Where(t => t.Name == flow.TypeName).SingleOrDefault();
+                .SelectMany(s => s.GetTypes())
+                .Where(t => t.Name == flow.TypeName && t.GetInterfaces().Contains(typeof(IFlow)) && t.IsClass && !t.IsAbstract)
+                .SingleOrDefault();
 
             if (flowType is null)
             {
@@ -47,6 +49,70 @@ namespace DidactCore.Flows
             return flowInstanceDto;
         }
 
+        public async Task ConfigureFlowsAsync()
+        {
+            var successfulFlowConfigurators = new List<FlowConfiguratorDto>();
+            var failedFlowConfigurators = new List<FlowConfiguratorDto>();
+
+            var flowTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(t => t.GetInterfaces().Contains(typeof(IFlow)) && t.IsClass && !t.IsAbstract);
+
+            // Configurator part 1: instantiate the Flows.
+            foreach (var flowType in flowTypes)
+            {
+                var iflow = _didactDependencyInjector.CreateInstance(flowType) as IFlow;
+
+                if (iflow is null)
+                {
+                    var exception = new Exception(
+                        $"The Flow type {flowType.Name} could not be instantiated with dependency injection during Flow configuration.");
+                    var failedFlowConfigurator = new FlowConfiguratorDto()
+                    {
+                        FlowType = flowType,
+                        Exception = exception
+                    };
+                    failedFlowConfigurators.Add(failedFlowConfigurator);
+                    continue;
+                }
+
+                var successfulFlowConfigurator = new FlowConfiguratorDto()
+                {
+                    FlowType = flowType,
+                    FlowInstance = iflow
+                };
+                successfulFlowConfigurators.Add(successfulFlowConfigurator);
+            }
+
+            // Configurator part 2: execute the configuration functions.
+            foreach (var flowConfigurator in successfulFlowConfigurators)
+            {
+                try
+                {
+                    await flowConfigurator.FlowInstance!.ConfigureAsync();
+                }
+                catch (Exception ex)
+                {
+                    successfulFlowConfigurators.Remove(flowConfigurator);
+
+                    var exception = new Exception(
+                        $"The Flow configurator for Flow type {flowConfigurator.FlowType.Name} has failed. See inner exception.", ex);
+                    flowConfigurator.Exception = exception;
+                    failedFlowConfigurators.Add(flowConfigurator);
+                }
+            }
+
+            foreach (var flowConfigurator in failedFlowConfigurators)
+            {
+                // TODO Handle failed flow configurators.
+            }
+
+            foreach (var flowConfigurator in successfulFlowConfigurators)
+            {
+                // TODO Handle successful flow configurators.
+            }
+        }
+
         public async Task ExecuteFlowInstanceAsync(FlowInstanceDto flowInstanceDto)
         {
             var flowId = flowInstanceDto.Flow.FlowId;
@@ -54,9 +120,12 @@ namespace DidactCore.Flows
             {
                 await flowInstanceDto.FlowInstance.ExecuteAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
+                // TODO
+                // Handle retries here.
+                // After final failure, log to storage.
+                // Do not actually throw;
             }
         }
     }
