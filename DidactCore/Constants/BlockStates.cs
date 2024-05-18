@@ -1,6 +1,6 @@
 ﻿namespace DidactCore.Constants
 {
-    public static class BlockState
+    public static class BlockStates
     {
         public const string Idle = "Idle";
         public const string Running = "Running";
