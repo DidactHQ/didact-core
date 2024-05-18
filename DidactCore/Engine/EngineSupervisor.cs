@@ -21,5 +21,15 @@ namespace DidactCore.Engine
             EngineState = engineState;
             EngineStateLastUpdated = DateTime.Now;
         }
+
+        public string GetEngineState()
+        {
+            return EngineState;
+        }
+
+        public DateTime GetEngineStateLastUpdated()
+        {
+            return EngineStateLastUpdated;
+        }
     }
 }

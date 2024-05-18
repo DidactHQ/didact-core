@@ -9,5 +9,9 @@ namespace DidactCore.Engine
         DateTime EngineStateLastUpdated { get; set; }
 
         void SetEngineState(string engineState);
+
+        string GetEngineState();
+
+        DateTime GetEngineStateLastUpdated();
     }
 }
