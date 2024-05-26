@@ -16,7 +16,7 @@ namespace DidactCore.Plugins
             return this;
         }
 
-        void FindMatchingPluginContainer(Type type)
+        IPluginContainer? FindMatchingPluginContainer(Type type)
         {
             var assemblyFullName = type.Assembly.FullName;
             var matchingPluginContainers = PluginContainers.Select(s => s)
@@ -25,12 +25,32 @@ namespace DidactCore.Plugins
 
             if (matchingPluginContainers.Count == 0)
             {
-
+                throw new NoMatchedPluginException();
             }
             if (matchingPluginContainers.Count > 1)
             {
-
+                throw new MultipleMatchedPluginsException();
             }
+
+            return matchingPluginContainers.First();
+        }
+
+        IPluginContainer? FindMatchingPluginContainer(string assemblyFullName)
+        {
+            var matchingPluginContainers = PluginContainers.Select(s => s)
+                .Where(p => p.PluginLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyFullName))
+                .ToList();
+
+            if (matchingPluginContainers.Count == 0)
+            {
+                throw new NoMatchedPluginException();
+            }
+            if (matchingPluginContainers.Count > 1)
+            {
+                throw new MultipleMatchedPluginsException();
+            }
+
+            return matchingPluginContainers.First();
         }
     }
 }
