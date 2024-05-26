@@ -1,5 +1,4 @@
-﻿using DidactCore.DependencyInjection;
-using System;
+﻿using System;
 using System.Linq;
 
 namespace DidactCore.Plugins
