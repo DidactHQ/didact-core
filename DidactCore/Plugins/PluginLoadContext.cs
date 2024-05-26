@@ -4,7 +4,7 @@ using System.Runtime.Loader;
 
 namespace DidactCore.Plugins
 {
-    class PluginLoadContext : AssemblyLoadContext
+    public class PluginLoadContext : AssemblyLoadContext
     {
         private readonly AssemblyDependencyResolver _resolver;
 
