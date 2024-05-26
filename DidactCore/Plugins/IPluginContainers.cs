@@ -20,7 +20,8 @@ namespace DidactCore.Plugins
         {
             var assemblyFullName = type.Assembly.FullName;
             var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyFullName))
+                .Where(p => p.PluginLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyFullName)
+                    && p.PluginLoadContext.Assemblies.SelectMany(s => s.GetTypes()).Contains(type))
                 .ToList();
 
             if (matchingPluginContainers.Count == 0)
