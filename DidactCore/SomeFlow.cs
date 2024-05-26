@@ -25,7 +25,8 @@ namespace DidactCore
                 .WithName("SomeFlow")
                 .WithDescription("A flow description.")
                 .WithTypeName(GetType().Name)
-                .ForQueue(QueueTypes.HyperQueue, "Default");
+                .ForQueue(QueueTypes.HyperQueue, "Default")
+                .WithCronSchedule("0 * * * *");
 
             await _flowConfigurator.SaveConfigurationsAsync();
         }
