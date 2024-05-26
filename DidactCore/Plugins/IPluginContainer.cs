@@ -10,7 +10,7 @@ namespace DidactCore.Plugins
 
         DateTime PluginLoadedAt { get; set; }
 
-        IDidactDependencyInjector DidactDependencyInjector { get; set; }
+        IPluginDependencyInjector PluginDependencyInjector { get; set; }
 
         int GetAssemblyCount()
         {
