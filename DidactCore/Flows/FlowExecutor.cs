@@ -1,5 +1,6 @@
-﻿using DidactCore.DependencyInjection;
+﻿using DidactCore.Engine;
 using DidactCore.Entities;
+using DidactCore.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,34 @@ namespace DidactCore.Flows
 {
     public class FlowExecutor : IFlowExecutor
     {
-        private readonly IDidactDependencyInjector _didactDependencyInjector;
+        private readonly IEngineSupervisor _engineSupervisor;
         private readonly IFlowRepository _flowRepository;
         private readonly IFlowLogger _flowLogger;
 
-        public FlowExecutor(IDidactDependencyInjector didactDependencyInjector, IFlowRepository flowRepository, IFlowLogger flowLogger)
+        public FlowExecutor(IEngineSupervisor engineSupervisor, IFlowRepository flowRepository, IFlowLogger flowLogger)
         {
-            _didactDependencyInjector = didactDependencyInjector ?? throw new ArgumentNullException(nameof(didactDependencyInjector));
+            _engineSupervisor = engineSupervisor ?? throw new ArgumentNullException(nameof(engineSupervisor));
             _flowRepository = flowRepository ?? throw new ArgumentNullException(nameof(flowRepository));
             _flowLogger = flowLogger ?? throw new ArgumentNullException(nameof(flowLogger));
         }
 
         public async Task<FlowInstanceDto> CreateFlowInstanceAsync(Flow flow)
         {
+            IPluginContainer pluginContainer;
+
+            try
+            {
+                pluginContainer = _engineSupervisor.PluginContainers.FindMatchingPluginContainer(flow.AssemblyFullName, flow.TypeName);
+            }
+            catch (NoMatchedPluginException ex)
+            {
+                throw;
+            }
+            catch (MultipleMatchedPluginsException ex)
+            {
+                throw;
+            }
+
             // Traverse the AppDomain's assemblies to get the type.
             // Remember that .NET 5+ only has 1 AppDomain going forward, so CurrentDomain is sufficient.
             var flowType = AppDomain.CurrentDomain.GetAssemblies()
@@ -37,7 +53,7 @@ namespace DidactCore.Flows
 
             // Create an instance of the type using the dependency injection system.
             // Then safe cast to an IFlow.
-            var iflow = _didactDependencyInjector.CreateInstance(flowType) as IFlow
+            var iflow = pluginContainer.PluginDependencyInjector.CreateInstance(flowType) as IFlow
                 ?? throw new NullReferenceException();
 
             var flowInstanceDto = new FlowInstanceDto()
@@ -61,7 +77,8 @@ namespace DidactCore.Flows
             // Configurator part 1: instantiate the Flows.
             foreach (var flowType in flowTypes)
             {
-                var iflow = _didactDependencyInjector.CreateInstance(flowType) as IFlow;
+                var pluginContainer = _engineSupervisor.PluginContainers.FindMatchingPluginContainer(flowType);
+                var iflow = pluginContainer.PluginDependencyInjector.CreateInstance(flowType) as IFlow;
 
                 if (iflow is null)
                 {
