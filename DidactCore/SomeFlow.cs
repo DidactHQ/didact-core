@@ -21,15 +21,14 @@ namespace DidactCore
 
         public async Task ConfigureAsync()
         {
-            _flowConfigurator
+            await _flowConfigurator
                 .WithName("SomeFlow Custom Name")
                 .WithDescription("A flow description.")
                 .AsVersion("1.0-alpha")
                 .WithTypeName(GetType().Name)
                 .ForQueue(QueueTypes.HyperQueue, "Default")
-                .WithCronSchedule("0 * * * *");
-
-            await _flowConfigurator.SaveConfigurationsAsync();
+                .WithCronSchedule("0 * * * *")
+                .SaveConfigurationsAsync();
         }
 
         public async Task ExecuteAsync(string? jsonInputString)
