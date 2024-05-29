@@ -50,10 +50,11 @@ namespace DidactCore.Plugins
         /// <returns></returns>
         /// <exception cref="NoMatchedPluginException"></exception>
         /// <exception cref="MultipleMatchedPluginsException"></exception>
-        IPluginContainer FindMatchingPluginContainer(string assemblyFullName)
+        IPluginContainer FindMatchingPluginContainer(string assemblyName, string assemblyVersion)
         {
             var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyFullName))
+                .Where(p => p.PluginLoadContext.Assemblies.Select(a => a.GetName().Name).Contains(assemblyName)
+                    && p.PluginLoadContext.Assemblies.Select(a => a.GetName().Version?.ToString() ?? string.Empty).Contains(assemblyVersion))
                 .ToList();
 
             if (matchingPluginContainers.Count == 0)
@@ -76,10 +77,11 @@ namespace DidactCore.Plugins
         /// <returns></returns>
         /// <exception cref="NoMatchedPluginException"></exception>
         /// <exception cref="MultipleMatchedPluginsException"></exception>
-        IPluginContainer FindMatchingPluginContainer(string assemblyFullName, string typeName)
+        IPluginContainer FindMatchingPluginContainer(string assemblyName, string assemblyVersion, string typeName)
         {
             var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyFullName)
+                .Where(p => p.PluginLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyName)
+                    && p.PluginLoadContext.Assemblies.Select(a => a.GetName().Version?.ToString() ?? string.Empty).Contains(assemblyVersion)
                     && p.PluginLoadContext.Assemblies.SelectMany(a => a.GetTypes()).Select(t => t.Name).Contains(typeName))
                 .ToList();
 
