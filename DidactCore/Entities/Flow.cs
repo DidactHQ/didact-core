@@ -13,7 +13,7 @@ namespace DidactCore.Entities
 
         public string? Description { get; set; }
 
-        public string? Version { get; set; }
+        public string AssemblyName { get; set; } = null!;
 
         public string TypeName { get; set; } = null!;
 
