@@ -1,5 +1,4 @@
-﻿using DidactCore.Entities;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace DidactCore.Flows
 {
@@ -9,9 +8,9 @@ namespace DidactCore.Flows
         /// Retrieves the Flow type from the AppDomain's assemblies using reflection
         /// and instantiates the Flow using the dependency injection system.
         /// </summary>
-        /// <param name="flow"></param>
+        /// <param name="flowRunDto"></param>
         /// <returns></returns>
-        Task<FlowInstanceDto> CreateFlowInstanceAsync(Flow flow);
+        Task<FlowRunDto> CreateFlowInstanceAsync(FlowRunDto flowRunDto);
 
         /// <summary>
         /// <para>
@@ -30,8 +29,8 @@ namespace DidactCore.Flows
         /// <summary>
         /// Asynchronously executes the IFlow instance by running its ExecuteAsync method and utilizing its Flow metadata.
         /// </summary>
-        /// <param name="flowInstanceDto"></param>
+        /// <param name="flowRunDto"></param>
         /// <returns></returns>
-        Task ExecuteFlowInstanceAsync(FlowInstanceDto flowInstanceDto);
+        Task ExecuteFlowInstanceAsync(FlowRunDto flowRunDto);
     }
 }

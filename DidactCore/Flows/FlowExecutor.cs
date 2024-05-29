@@ -1,5 +1,4 @@
 ﻿using DidactCore.Engine;
-using DidactCore.Entities;
 using DidactCore.Plugins;
 using System;
 using System.Collections.Generic;
@@ -21,13 +20,13 @@ namespace DidactCore.Flows
             _flowLogger = flowLogger ?? throw new ArgumentNullException(nameof(flowLogger));
         }
 
-        public async Task<FlowInstanceDto> CreateFlowInstanceAsync(Flow flow)
+        public async Task<FlowRunDto> CreateFlowInstanceAsync(FlowRunDto flowRunDto)
         {
             IPluginContainer pluginContainer;
 
             try
             {
-                pluginContainer = _engineSupervisor.PluginContainers.FindMatchingPluginContainer(flow.AssemblyFullName, flow.TypeName);
+                pluginContainer = _engineSupervisor.PluginContainers.FindMatchingPluginContainer(flowRunDto.Flow.AssemblyName, flowRunDto.FlowVersion.AssemblyVersion, flowRunDto.Flow.TypeName);
             }
             catch (NoMatchedPluginException ex)
             {
@@ -42,12 +41,12 @@ namespace DidactCore.Flows
             // Remember that .NET 5+ only has 1 AppDomain going forward, so CurrentDomain is sufficient.
             var flowType = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(t => t.Name == flow.TypeName && t.GetInterfaces().Contains(typeof(IFlow)) && t.IsClass && !t.IsAbstract)
+                .Where(t => t.Name == flowRunDto.Flow.TypeName && t.GetInterfaces().Contains(typeof(IFlow)) && t.IsClass && !t.IsAbstract)
                 .SingleOrDefault();
 
             if (flowType is null)
             {
-                await _flowRepository.DeactivateFlowByIdAsync(flow.FlowId);
+                await _flowRepository.DeactivateFlowByIdAsync(flowRunDto.Flow.FlowId);
                 throw new ArgumentNullException();
             }
 
@@ -56,15 +55,11 @@ namespace DidactCore.Flows
             var iflow = pluginContainer.PluginDependencyInjector.CreateInstance(flowType) as IFlow
                 ?? throw new NullReferenceException();
 
-            var flowInstanceDto = new FlowInstanceDto()
-            {
-                Flow = flow,
-                FlowInstance = iflow
-            };
-
-            return flowInstanceDto;
+            flowRunDto.FlowInstance = iflow;
+            return flowRunDto;
         }
 
+        // TODO Specify to a container?
         public async Task ConfigureFlowsAsync()
         {
             var successfulFlowConfigurators = new List<FlowConfiguratorDto>();
@@ -130,12 +125,16 @@ namespace DidactCore.Flows
             }
         }
 
-        public async Task ExecuteFlowInstanceAsync(FlowInstanceDto flowInstanceDto)
+        public async Task ExecuteFlowInstanceAsync(FlowRunDto flowRunDto)
         {
-            var flowId = flowInstanceDto.Flow.FlowId;
+            if (flowRunDto.FlowInstance is null)
+            {
+                throw new Exception("Oops.");
+            }
+
             try
             {
-                await flowInstanceDto.FlowInstance.ExecuteAsync();
+                await flowRunDto.FlowInstance.ExecuteAsync();
             }
             catch (Exception)
             {
