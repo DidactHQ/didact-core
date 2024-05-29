@@ -22,8 +22,9 @@ namespace DidactCore
         public async Task ConfigureAsync()
         {
             _flowConfigurator
-                .WithName("SomeFlow")
+                .WithName("SomeFlow Custom Name")
                 .WithDescription("A flow description.")
+                .AsVersion("1.0-alpha")
                 .WithTypeName(GetType().Name)
                 .ForQueue(QueueTypes.HyperQueue, "Default")
                 .WithCronSchedule("0 * * * *");
