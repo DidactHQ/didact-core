@@ -21,6 +21,11 @@ namespace DidactCore.Flows
         string Description { get; }
 
         /// <summary>
+        /// The Flow's version.
+        /// </summary>
+        string Version { get; }
+
+        /// <summary>
         /// The Flow's Type name.
         /// </summary>
         string TypeName { get; }
@@ -69,6 +74,13 @@ namespace DidactCore.Flows
         /// <param name="description"></param>
         /// <returns></returns>
         IFlowConfigurator WithDescription(string description);
+
+        /// <summary>
+        /// Sets the Flow version.
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        IFlowConfigurator AsVersion(string version);
 
         /// <summary>
         /// Sets the Flow Type name.

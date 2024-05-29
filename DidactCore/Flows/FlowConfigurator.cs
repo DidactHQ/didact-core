@@ -15,6 +15,8 @@ namespace DidactCore.Flows
 
         public string Description { get; private set; }
 
+        public string Version { get; private set; }
+
         public string TypeName { get; private set; }
 
         public string QueueType { get; private set; } = QueueTypes.HyperQueue;
@@ -44,6 +46,12 @@ namespace DidactCore.Flows
         public IFlowConfigurator WithDescription(string description)
         {
             Description = description;
+            return this;
+        }
+
+        public IFlowConfigurator AsVersion(string version)
+        {
+            Version = version;
             return this;
         }
 
