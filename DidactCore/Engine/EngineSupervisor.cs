@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DidactCore.Plugins;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace DidactCore.Engine
@@ -31,5 +32,7 @@ namespace DidactCore.Engine
         {
             return EngineStateLastUpdated;
         }
+
+        public IPluginContainers PluginContainers { get; set; }
     }
 }

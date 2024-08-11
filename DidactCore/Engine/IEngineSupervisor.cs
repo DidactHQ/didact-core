@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DidactCore.Plugins;
+using System;
 
 namespace DidactCore.Engine
 {
@@ -13,5 +14,7 @@ namespace DidactCore.Engine
         string GetEngineState();
 
         DateTime GetEngineStateLastUpdated();
+
+        IPluginContainers PluginContainers { get; set; }
     }
 }
