@@ -1,4 +1,5 @@
 ﻿using DidactCore.Blocks;
+using DidactCore.Blocks.GenericActionBlocks;
 using DidactCore.Constants;
 using DidactCore.DependencyInjection;
 using DidactCore.Flows;
@@ -43,8 +44,16 @@ namespace DidactCore
                     await Task.Delay(1000);
                 });
 
+            var httpBlock = _didactDependencyInjector.CreateInstance<ActionTaskBlock>();  
+            httpBlock.WithExecutor(async () =>
+             { 
+                 HttpActionTaskBlock httpActionTaskBlock = new HttpActionTaskBlock(_didactDependencyInjector);
+                 await httpActionTaskBlock.ExecuteAsync();
+             });            
+
             //await actionBlock.ExecuteAsync();
             await actionTaskBlock.ExecuteDelegateAsync();
+            await httpBlock.ExecuteDelegateAsync();
             await Task.CompletedTask;
 
             //var actionBlock = _didactDependencyInjector.CreateInstance<ActionBlock<string>>();
