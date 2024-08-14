@@ -1,4 +1,5 @@
 ﻿using DidactCore.Blocks;
+using DidactCore.Blocks.CustomActionBlocks;
 using DidactCore.Blocks.GenericActionBlocks;
 using DidactCore.Constants;
 using DidactCore.DependencyInjection;

@@ -31,16 +31,7 @@ namespace DidactCore.Blocks.GenericActionBlocks
 
         public HttpActionTaskBlock(IDidactDependencyInjector didactDependencyInjector)
         {
-            //ExecuteAsync().Wait();
-
-            //_didactDependencyInjector = didactDependencyInjector;
-
-            //var actionTaskBlock = _didactDependencyInjector.CreateInstance<ActionTaskBlock>();
-            //actionTaskBlock
-            //    .WithExecutor(async () =>
-            //    {
-                    
-            //    });
+            _didactDependencyInjector = didactDependencyInjector;
         }
     }
 }
