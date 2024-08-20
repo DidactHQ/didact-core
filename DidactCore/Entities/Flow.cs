@@ -34,5 +34,9 @@ namespace DidactCore.Entities
         public virtual Organization Organization { get; set; } = null!;
 
         public virtual ICollection<FlowRun> FlowRuns { get; } = new List<FlowRun>();
+
+        public virtual ICollection<FlowVersion> FlowVersions { get; set; } = null!;
     }
 }
+
+//public DateTime RowVersion { get; set; }
