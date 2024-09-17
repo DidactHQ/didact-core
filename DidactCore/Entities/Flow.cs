@@ -17,6 +17,8 @@ namespace DidactCore.Entities
 
         public string TypeName { get; set; } = null!;
 
+        public int ExecutionModeId { get; set; }
+
         public int ConcurrencyLimit { get; set; }
 
         public DateTime Created { get; set; }
@@ -32,6 +34,8 @@ namespace DidactCore.Entities
         public byte[] RowVersion { get; set; } = null!;
 
         public virtual Organization Organization { get; set; } = null!;
+
+        public virtual ExecutionMode ExecutionMode { get; set; } = null!;
 
         public virtual ICollection<FlowRun> FlowRuns { get; } = new List<FlowRun>();
     }
