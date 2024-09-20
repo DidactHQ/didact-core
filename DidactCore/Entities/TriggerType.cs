@@ -22,7 +22,5 @@ namespace DidactCore.Entities
         public bool Active { get; set; }
 
         public byte[] RowVersion { get; set; } = null!;
-
-        public virtual ICollection<FlowRun> FlowRuns { get; } = new List<FlowRun>();
     }
 }

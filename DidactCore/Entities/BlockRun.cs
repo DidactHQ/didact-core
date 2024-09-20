@@ -8,8 +8,6 @@ namespace DidactCore.Entities
 
         public long FlowRunId { get; set; }
 
-        public int OrganizationId { get; set; }
-
         public string? BlockName { get; set; }
 
         public string? Name { get; set; }
@@ -39,8 +37,6 @@ namespace DidactCore.Entities
         public byte[] RowVersion { get; set; } = null!;
 
         public virtual FlowRun FlowRun { get; set; } = null!;
-
-        public virtual Organization Organization { get; set; } = null!;
 
         public virtual State State { get; set; } = null!;
     }

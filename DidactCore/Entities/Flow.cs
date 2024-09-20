@@ -38,5 +38,9 @@ namespace DidactCore.Entities
         public virtual ExecutionMode ExecutionMode { get; set; } = null!;
 
         public virtual ICollection<FlowRun> FlowRuns { get; } = new List<FlowRun>();
+
+        public virtual ICollection<FlowVersion> FlowVersions { get; set; } = null!;
     }
 }
+
+//public DateTime RowVersion { get; set; }

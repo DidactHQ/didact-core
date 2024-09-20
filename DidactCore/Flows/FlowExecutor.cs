@@ -52,8 +52,7 @@ namespace DidactCore.Flows
 
             // Create an instance of the type using the dependency injection system.
             // Then safe cast to an IFlow.
-            var iflow = pluginContainer.PluginDependencyInjector.CreateInstance(flowType) as IFlow
-                ?? throw new NullReferenceException();
+            var iflow = pluginContainer.PluginDependencyInjector.CreateInstance(flowType) as IFlow ?? throw new NullReferenceException();
 
             flowRunDto.FlowInstance = iflow;
             return flowRunDto;

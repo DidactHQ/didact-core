@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 
 namespace DidactCore.Blocks
 {
+    /// <summary>
+    /// An asynchronous execution wrapper that takes an input of type T and returns no output.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ActionTaskBlock
     {
         private readonly ILogger<ActionTaskBlock> _logger;
@@ -15,7 +19,7 @@ namespace DidactCore.Blocks
             _logger = logger;
         }
 
-        public async Task ExecuteDelegateAsyn()
+        public async Task ExecuteDelegateAsync()
         {
             _logger.LogInformation("Executing delegate...");
             await Executor.Invoke().ConfigureAwait(false);

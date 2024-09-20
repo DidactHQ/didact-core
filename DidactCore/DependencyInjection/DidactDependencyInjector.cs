@@ -6,17 +6,34 @@ namespace DidactCore.DependencyInjection
 {
     public class DidactDependencyInjector : IDidactDependencyInjector
     {
+        //public IServiceCollection ApplicationServiceCollection { get; set; }
+
+        //public IServiceCollection FlowServiceCollection { get; set; }
+
+        //public IServiceProvider ApplicationServiceCollection { get; set; }
+
+        //public IServiceProvider FlowServiceCollection { get; set; }
+
+        //public IServiceProvider FlowServiceProvider { get; set; }
+
         public IServiceCollection ApplicationServiceCollection { get; set; }
-
         public IServiceCollection FlowServiceCollection { get; set; }
-
         public IServiceProvider FlowServiceProvider { get; set; }
 
         public DidactDependencyInjector(IServiceCollection applicationServiceCollection)
         {
+            //FlowServiceCollection = new ServiceCollection();
+
+
             ApplicationServiceCollection = applicationServiceCollection;
             FlowServiceCollection = applicationServiceCollection;
             FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
+
+            //ApplicationServiceCollection = applicationServiceCollection;
+            //FlowServiceCollection = new ServiceCollection();
+
+            //FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
+
         }
 
         public void ResetServiceCollection()
@@ -43,6 +60,10 @@ namespace DidactCore.DependencyInjection
         public object CreateInstance(Type type, params object[] parameters)
         {
             return ActivatorUtilities.CreateInstance(FlowServiceProvider, type, parameters);
+        }
+        public void BuildFlowServiceProvider()
+        {
+            FlowServiceProvider = FlowServiceCollection.BuildServiceProvider();
         }
     }
 }
