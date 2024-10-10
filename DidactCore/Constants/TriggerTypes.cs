@@ -4,6 +4,6 @@
     {
         public const string API = "API";
         public const string Scheduled = "Scheduled";
-        public const string ParentFlow = "Parent Flow";
+        public const string FlowRun = "Flow Run";
     }
 }
