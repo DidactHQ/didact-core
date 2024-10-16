@@ -31,9 +31,7 @@ namespace DidactCore.Entities
 
         public int StateId { get; set; }
 
-        public DateTime StateLastUpdated { get; set; }
-
-        public string StateLastUpdatedBy { get; set; } = null!;
+        public DateTime ScheduledFor { get; set; }
 
         public DateTime? ExecutionStarted { get; set; }
 
