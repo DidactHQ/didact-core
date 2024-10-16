@@ -12,6 +12,8 @@ namespace DidactCore.Entities
 
         public string? Name { get; set; }
 
+        public DateTime LastHeartbeat { get; set; }
+
         public string? Description { get; set; }
 
         public DateTime Created { get; set; }
