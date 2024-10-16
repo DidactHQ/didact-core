@@ -2,7 +2,7 @@
 
 namespace DidactCore.Entities
 {
-    internal class FlowRunEventType
+    public class FlowRunEventType
     {
         public int FlowRunEventTypeId { get; set; }
 
