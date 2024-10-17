@@ -5,14 +5,14 @@ namespace DidactCore.Blocks
 {
     public class DelegateBlock
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<DelegateBlock> _logger;
         private readonly IBlockRepository _blockRepository;
 
         public Delegate Delegate { get; private set; } = null!;
 
         public object[] Arguments { get; private set; } = null!;
 
-        public DelegateBlock(ILogger logger, IBlockRepository blockRepository)
+        public DelegateBlock(ILogger<DelegateBlock> logger, IBlockRepository blockRepository)
         {
             _logger = logger;
             _blockRepository = blockRepository;

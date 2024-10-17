@@ -8,7 +8,7 @@ namespace DidactCore.Flows
 {
     public class FlowConfigurator : IFlowConfigurator
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<FlowConfigurator> _logger;
         private readonly IFlowRepository _flowRepository;
 
         public string Name { get; private set; }
@@ -31,7 +31,7 @@ namespace DidactCore.Flows
 
         public DateTime? EndDateTime { get; private set; }
 
-        public FlowConfigurator(ILogger logger, IFlowRepository flowRepository)
+        public FlowConfigurator(ILogger<FlowConfigurator> logger, IFlowRepository flowRepository)
         {
             _logger = logger;
             _flowRepository = flowRepository;

@@ -30,8 +30,6 @@ namespace DidactCore.Entities
 
         public byte[] RowVersion { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
-
         public virtual ScheduleType ScheduleType { get; set; } = null!;
 
         public virtual Flow Flow { get; set; } = null!;

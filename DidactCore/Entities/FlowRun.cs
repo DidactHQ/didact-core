@@ -51,10 +51,6 @@ namespace DidactCore.Entities
 
         public virtual Flow Flow { get; set; } = null!;
 
-        public virtual FlowVersion FlowVersion { get; set; } = null!;
-
-        public virtual Organization Organization { get; set; } = null!;
-
         public virtual State State { get; set; } = null!;
 
         public virtual TriggerType TriggerType { get; set; } = null!;
@@ -68,3 +64,5 @@ namespace DidactCore.Entities
         public virtual ICollection<FifoQueueInbound> FifoQueueInbounds { get; } = new List<FifoQueueInbound>();
     }
 }
+
+//public virtual FlowVersion FlowVersion { get; set; } = null!;

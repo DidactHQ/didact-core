@@ -1,7 +1,10 @@
 ﻿using DidactCore.Blocks;
+using DidactCore.Blocks.CustomActionBlocks;
+using DidactCore.Blocks.GenericActionBlocks;
 using DidactCore.Constants;
 using DidactCore.DependencyInjection;
 using DidactCore.Flows;
+using System;
 using System.Threading.Tasks;
 
 namespace DidactCore
@@ -33,20 +36,39 @@ namespace DidactCore
 
         public async Task ExecuteAsync(string? jsonInputString)
         {
-            var actionBlock = _didactDependencyInjector.CreateInstance<ActionBlock<string>>();
-            actionBlock
-                .WithName("Test block 1")
-                .WithRetries(3, 10000);
-
             var actionTaskBlock = _didactDependencyInjector.CreateInstance<ActionTaskBlock>();
             actionTaskBlock
                 .WithExecutor(async () =>
                 {
+                    Console.WriteLine(jsonInputString);
+                    Console.WriteLine("ran action task block!");
                     await Task.Delay(1000);
                 });
 
-            await actionBlock.ExecuteAsync();            
+            var httpBlock = _didactDependencyInjector.CreateInstance<ActionTaskBlock>();  
+            httpBlock.WithExecutor(async () =>
+             { 
+                 HttpActionTaskBlock httpActionTaskBlock = new HttpActionTaskBlock(_didactDependencyInjector);
+                 await httpActionTaskBlock.ExecuteAsync();
+             });            
+
+            //await actionBlock.ExecuteAsync();
+            await actionTaskBlock.ExecuteDelegateAsync();
+            await httpBlock.ExecuteDelegateAsync();
             await Task.CompletedTask;
+
+            //var actionBlock = _didactDependencyInjector.CreateInstance<ActionBlock<string>>();
+            //actionBlock
+            //    .WithName("Test block 1")
+            //    .WithRetries(3, 10000).Action(async (input) => {await Task.Delay(1000) return input;});return input;
+            //    });
+
+            //var actionBlock = _didactDependencyInjector.CreateInstance<ActionBlock<string>>();
+            //actionBlock.WithName("Test block 1")
+            //.WithRetries(3, 10000).Action((input) => { await Task.Delay(1000); });
+            // Perform some action with 'input', but do not return anything
+
+
         }
     }
 }

@@ -29,8 +29,6 @@ namespace DidactCore.Entities
 
         public virtual Flow Flow { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
-
         public virtual ICollection<FlowRun> FlowRuns { get; } = new List<FlowRun>();
     }
 }

@@ -12,7 +12,7 @@ namespace DidactCore.Blocks
     /// <typeparam name="T"></typeparam>
     public class ActionBlock<T>
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<ActionBlock<T>> _logger;
         private readonly IBlockRepository _blockRepository;
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace DidactCore.Blocks
         public bool SoftTimeoutExceeded { get; private set; }
 
 
-        public ActionBlock(ILogger logger, IBlockRepository blockRepository)
+        public ActionBlock(ILogger<ActionBlock<T>> logger, IBlockRepository blockRepository)
         {
             _logger = logger;
             _blockRepository = blockRepository;
