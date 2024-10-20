@@ -5,13 +5,11 @@ namespace DidactCore.Entities
 {
     public class FlowVersion
     {
-        public int FlowVersionId { get; set; }
+        public long FlowVersionId { get; set; }
 
         public long FlowId { get; set; }
 
         public int OrganizationId { get; set; }
-
-        public string AssemblyVersion { get; set; } = null!;
 
         public string Version { get; set; } = null!;
 
