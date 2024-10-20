@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DidactCore.Execution;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DidactCore.Plugins
@@ -6,6 +8,8 @@ namespace DidactCore.Plugins
     public interface IPluginContainer
     {
         PluginLoadContext PluginLoadContext { get; set; }
+
+        ICollection<PluginExecutionVersion> PluginExecutionVersions { get; }
 
         DateTime PluginLoadedAt { get; set; }
 
