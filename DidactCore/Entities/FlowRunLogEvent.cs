@@ -2,11 +2,11 @@
 
 namespace DidactCore.Entities
 {
-    public class FlowRunLog
+    public class FlowRunLogEvent
     {
-        public long FlowRunLogId { get; set; }
+        public long FlowRunLogEventId { get; set; }
 
-        public long FlowRunId { get; set; }
+        public long FlowRunEventId { get; set; }
 
         public int OrganizationId { get; set; }
 
@@ -26,7 +26,7 @@ namespace DidactCore.Entities
 
         public byte[] RowVersion { get; set; } = null!;
 
-        public virtual FlowRun FlowRun { get; set; } = null!;
+        public virtual FlowRunEvent FlowRunEvent { get; set; } = null!;
 
         public virtual Organization Organization { get; set; } = null!;
     }
