@@ -1,4 +1,4 @@
-﻿namespace DidactCore.Execution
+﻿namespace DidactCore.Plugins
 {
     public class PluginExecutionVersion
     {
