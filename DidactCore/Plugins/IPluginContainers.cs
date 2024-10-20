@@ -69,6 +69,28 @@ namespace DidactCore.Plugins
             return matchingPluginContainers.First();
         }
 
+        IPluginContainer FindMatchingPluginContainer(PluginExecutionVersion pluginExecutionVersion, string typeName)
+        {
+            var matchingPluginContainers = PluginContainers.Select(s => s)
+                .Where(p => p.PluginExecutionVersions.Contains(pluginExecutionVersion)
+                    && p.PluginLoadContext.Assemblies.SelectMany(a => a.GetTypes()).Select(t => t.Name).Contains(typeName))
+                .ToList();
+
+            if (matchingPluginContainers.Count == 0)
+            {
+                throw new NoMatchedPluginException();
+            }
+
+            if (matchingPluginContainers.Count > 1)
+            {
+                // TODO Need to sort by the plugin load timestamp.
+                matchingPluginContainers.Sort();
+                return matchingPluginContainers.First();
+            }
+
+            return matchingPluginContainers.First();
+        }
+
         /// <summary>
         /// Finds a matching <see cref="IPluginContainer"/> for the given assembly FullName and type Name.
         /// </summary>
