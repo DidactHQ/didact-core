@@ -26,7 +26,7 @@ namespace DidactCore.Flows
 
             try
             {
-                pluginContainer = _engineSupervisor.PluginContainers.FindMatchingPluginContainer(flowRunDto.Flow.AssemblyName, flowRunDto.FlowVersion.AssemblyVersion, flowRunDto.Flow.TypeName);
+                pluginContainer = _engineSupervisor.PluginContainers.FindMatchingPluginContainer(flowRunDto.PluginExecutionVersion, flowRunDto.Flow.TypeName);
             }
             catch (NoMatchedPluginException ex)
             {
