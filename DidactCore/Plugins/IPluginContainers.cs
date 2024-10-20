@@ -69,11 +69,10 @@ namespace DidactCore.Plugins
             return matchingPluginContainers.First();
         }
 
-        IPluginContainer FindMatchingPluginContainer(PluginExecutionVersion pluginExecutionVersion, string typeName)
+        IPluginContainer FindMatchingPluginContainer(PluginExecutionVersion pluginExecutionVersion)
         {
             var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginExecutionVersions.Contains(pluginExecutionVersion)
-                    && p.PluginLoadContext.Assemblies.SelectMany(a => a.GetTypes()).Select(t => t.Name).Contains(typeName))
+                .Where(p => p.PluginExecutionVersions.Contains(pluginExecutionVersion))
                 .ToList();
 
             if (matchingPluginContainers.Count == 0)
