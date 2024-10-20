@@ -9,7 +9,7 @@ namespace DidactCore.Entities
 
         public long FlowId { get; set; }
 
-        public int FlowVersionId { get; set; }
+        public long ExecutionVersionId { get; set; }
 
         public int OrganizationId { get; set; }
 
