@@ -4,13 +4,15 @@ namespace DidactCore.Entities
 {
     public class Engine
     {
-        public int EngineId { get; set; }
+        public long EngineId { get; set; }
 
         public int OrganizationId { get; set; }
 
         public string UniqueName { get; set; } = null!;
 
         public string? Name { get; set; }
+
+        public int? LatestProcessId { get; set; }
 
         public DateTime LastHeartbeat { get; set; }
 
