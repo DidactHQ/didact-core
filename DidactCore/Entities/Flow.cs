@@ -9,11 +9,11 @@ namespace DidactCore.Entities
 
         public int OrganizationId { get; set; }
 
+        public long LibraryId { get; set; }
+
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
-
-        public string AssemblyName { get; set; } = null!;
 
         public string TypeName { get; set; } = null!;
 
