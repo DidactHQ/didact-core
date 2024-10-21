@@ -5,10 +5,10 @@ namespace DidactCore.Flows
     public interface IFlow
     {
         /// <summary>
-        /// Configures the Flow metadata to be saved to persistent storage.
+        /// Configures the Flow metadata as a returned <see cref="IFlowConfigurator"/>.
         /// </summary>
         /// <returns></returns>
-        Task ConfigureAsync();
+        IFlowConfigurator Configure();
 
         /// <summary>
         /// Asynchronously executes the Flow.
