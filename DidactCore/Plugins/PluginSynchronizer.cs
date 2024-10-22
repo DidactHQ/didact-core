@@ -1,8 +1,8 @@
-﻿using DidactCore.Flows;
+﻿using DidactCore.Constants;
+using DidactCore.Flows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DidactCore.Plugins
@@ -20,16 +20,7 @@ namespace DidactCore.Plugins
 
         public async Task SynchronizeFlowsAsync()
         {
-            var successfulFlowConfigurators = new List<FlowConfiguratorDto>();
-            var failedFlowConfigurators = new List<FlowConfiguratorDto>();
-            var flowTypesInstantiated = new List<Type>();
-            var flowTypesNotInstantiated = new List<Type>();
-
-            var flowConfiguratorsInstantiated = new List<FlowConfiguratorDto>();
-            var flowConfiguratorsNotInstantiated = new List<FlowConfiguratorDto>();
-            var flowConfiguratorsSynchronized = new { };
-            var flowConfiguratorsNotSynchronized = new { };
-
+            var flowConfigurators = new List<FlowConfiguratorDto>();
             var flowTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(t => t.GetInterfaces().Contains(typeof(IFlow)) && t.IsClass && !t.IsAbstract);
@@ -43,58 +34,54 @@ namespace DidactCore.Plugins
                 {
                     var exception = new Exception(
                         $"The Flow type {flowType.Name} could not be instantiated with dependency injection during Flow configuration.");
-                    flowTypesNotInstantiated.Add(flowType);
-
-                    var failedFlowConfigurator = new FlowConfiguratorDto()
+                    var notInstantiatedFlowConfigurator = new FlowConfiguratorDto()
                     {
                         FlowType = flowType,
+                        State = FlowConfiguratorStates.FlowInstantiationFailed,
                         Exception = exception
                     };
-                    flowConfiguratorsNotInstantiated.Add(failedFlowConfigurator);
-
+                    flowConfigurators.Add(notInstantiatedFlowConfigurator);
                     continue;
                 }
 
-                flowTypesInstantiated.Add(flowType);
-
-                var successfulFlowConfigurator = new FlowConfiguratorDto()
+                var instantiatedFlowConfigurator = new FlowConfiguratorDto()
                 {
                     FlowType = flowType,
+                    State = FlowConfiguratorStates.FlowInstantiationSuccessful,
                     FlowInstance = iflow
                 };
-                flowConfiguratorsInstantiated.Add(successfulFlowConfigurator);
-            }
-
-            if (flowConfiguratorsInstantiated.Count == 0)
-            {
-                // TODO Throw exception for failed plugin instantiations.
+                flowConfigurators.Add(instantiatedFlowConfigurator);
             }
 
             // Configurator part 2: execute the configuration functions.
-            foreach (var flowConfiguratorInstantiated in flowConfiguratorsInstantiated)
+            foreach (var flowConfiguratorDto in flowConfigurators.Where(c => c.State == FlowConfiguratorStates.FlowInstantiationSuccessful))
             {
                 try
                 {
-                    var flowConfigurator = flowConfiguratorInstantiated.FlowInstance!.Configure();
-                    await _flowRepository.SaveConfigurationsAsync(flowConfigurator);
+                    var iFlowConfigurator = flowConfiguratorDto.FlowInstance!.Configure();
+                    await _flowRepository.SaveConfigurationsAsync(iFlowConfigurator);
+                    flowConfiguratorDto.State = FlowConfiguratorStates.FlowConfigurationSuccessful;
                 }
                 catch (Exception ex)
                 {
-                    successfulFlowConfigurators.Remove(flowConfigurator);
-
                     var exception = new Exception(
-                        $"The Flow configurator for Flow type {flowConfigurator.FlowType.Name} has failed. See inner exception.", ex);
-                    flowConfigurator.Exception = exception;
-                    failedFlowConfigurators.Add(flowConfigurator);
+                        $"The Flow configurator for Flow type {flowConfiguratorDto.FlowType.Name} has failed. See inner exception.", ex);
+                    flowConfiguratorDto.Exception = exception;
+                    flowConfiguratorDto.State = FlowConfiguratorStates.FlowConfigurationFailed;
                 }
             }
 
-            foreach (var flowConfigurator in failedFlowConfigurators)
+            foreach (var flowConfigurator in flowConfigurators.Where(c => c.State == FlowConfiguratorStates.FlowInstantiationFailed))
             {
-                // TODO Handle failed flow configurators.
+                // TODO Handle failed flow instantiations.
             }
 
-            foreach (var flowConfigurator in successfulFlowConfigurators)
+            foreach (var flowConfigurator in flowConfigurators.Where(c => c.State == FlowConfiguratorStates.FlowConfigurationFailed))
+            {
+                // TODO Handle failed flow configurations.
+            }
+
+            foreach (var flowConfigurator in flowConfigurators.Where(c => c.State == FlowConfiguratorStates.FlowConfigurationSuccessful))
             {
                 // TODO Handle successful flow configurators.
             }
