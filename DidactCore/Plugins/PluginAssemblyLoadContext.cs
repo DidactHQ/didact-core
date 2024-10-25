@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -16,7 +17,16 @@ namespace DidactCore.Plugins
 
         protected override Assembly? Load(AssemblyName assemblyName)
         {
-            string? assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+            // If the assembly is already loaded in the default AssemblyLoadContext,
+            // then bypass the plugin's assembly and use the one from the default AssemblyLoadContext.
+            var assembly = Default.Assemblies.FirstOrDefault(a => a.GetName().Name == assemblyName.Name);
+            if (assembly is not null)
+            {
+                return assembly;
+            }
+
+            // Use the resolver to load other assemblies specific to this AssemblyLoadContext
+            var assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
             if (assemblyPath is not null)
             {
                 return LoadFromAssemblyPath(assemblyPath);
