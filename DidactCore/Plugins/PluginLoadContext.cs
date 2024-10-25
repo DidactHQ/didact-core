@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -33,6 +34,11 @@ namespace DidactCore.Plugins
             }
 
             return IntPtr.Zero;
+        }
+
+        public IEnumerable<Assembly> GetAssemblies()
+        {
+            return Assemblies;
         }
     }
 }
