@@ -17,6 +17,10 @@ namespace DidactCore.Plugins
 
         int GetAssemblyCount() => PluginAssemblyLoadContext.Assemblies.Count();
 
+        /// <summary>
+        /// Gets an enumeration of the assemblies from the plugin container's <see cref="DidactCore.Plugins.PluginAssemblyLoadContext"/>.
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<Assembly> GetAssemblies() => PluginAssemblyLoadContext.Assemblies;
 
         IPluginContainer SetPluginLoadedAt(DateTime pluginLoadedAt)
