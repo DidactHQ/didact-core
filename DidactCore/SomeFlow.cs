@@ -29,7 +29,7 @@ namespace DidactCore
                 .WithCronSchedule("0 * * * *");
         }
 
-        public async Task ExecuteAsync(string? jsonInputString)
+        public async Task ExecuteAsync(IFlowExecutionContext context)
         {          
             await Task.CompletedTask;
         }
