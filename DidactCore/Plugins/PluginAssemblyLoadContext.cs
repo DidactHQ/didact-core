@@ -24,7 +24,7 @@ namespace DidactCore.Plugins
             {
                 return assembly;
             }
-
+            
             // Use the resolver to load other assemblies specific to this AssemblyLoadContext
             var assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
             if (assemblyPath is not null)
