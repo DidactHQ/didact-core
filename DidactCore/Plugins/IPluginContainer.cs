@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace DidactCore.Plugins
 {
@@ -14,10 +15,9 @@ namespace DidactCore.Plugins
 
         IPluginDependencyInjector PluginDependencyInjector { get; set; }
 
-        int GetAssemblyCount()
-        {
-            return PluginAssemblyLoadContext.Assemblies.Count();
-        }
+        int GetAssemblyCount() => PluginAssemblyLoadContext.Assemblies.Count();
+
+        IEnumerable<Assembly> GetAssemblies() => PluginAssemblyLoadContext.Assemblies;
 
         IPluginContainer SetPluginLoadedAt(DateTime pluginLoadedAt)
         {
