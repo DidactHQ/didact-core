@@ -6,7 +6,7 @@ namespace DidactCore.Plugins
 {
     public interface IPluginContainer
     {
-        PluginLoadContext PluginLoadContext { get; set; }
+        PluginAssemblyLoadContext PluginAssemblyLoadContext { get; set; }
 
         ICollection<PluginExecutionVersion> PluginExecutionVersions { get; }
 
@@ -16,7 +16,7 @@ namespace DidactCore.Plugins
 
         int GetAssemblyCount()
         {
-            return PluginLoadContext.Assemblies.Count();
+            return PluginAssemblyLoadContext.Assemblies.Count();
         }
 
         IPluginContainer SetPluginLoadedAt(DateTime pluginLoadedAt)

@@ -5,11 +5,11 @@ using System.Runtime.Loader;
 
 namespace DidactCore.Plugins
 {
-    public class PluginLoadContext : AssemblyLoadContext
+    public class PluginAssemblyLoadContext : AssemblyLoadContext
     {
         private readonly AssemblyDependencyResolver _resolver;
 
-        public PluginLoadContext(string pluginPath)
+        public PluginAssemblyLoadContext(string pluginPath)
         {
             _resolver = new AssemblyDependencyResolver(pluginPath);
         }
