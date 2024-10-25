@@ -15,7 +15,7 @@ namespace DidactCore.Flows
 
         public string Description { get; private set; }
 
-        public string Version { get; private set; }
+        public string Version { get; private set; } = "v1.0.0";
 
         public string TypeName { get; private set; }
 
