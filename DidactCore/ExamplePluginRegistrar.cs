@@ -2,9 +2,9 @@
 
 namespace DidactCore.Plugins
 {
-    public class PluginRegistrar : IPluginRegistrar
+    public class ExamplePluginRegistrar : IPluginRegistrar
     {
-        public PluginRegistrar() { }
+        public ExamplePluginRegistrar() { }
 
         public IServiceCollection CreateServiceCollection()
         {
