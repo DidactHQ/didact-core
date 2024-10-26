@@ -1,6 +1,6 @@
 ﻿namespace DidactCore.Constants
 {
-    public static class FlowLibrarySources
+    public static class FlowLibrarySourceTypes
     {
         public const string LocalFilesystem = "Local Filesystem";
         public const string NetworkLocation = "Network Location";
