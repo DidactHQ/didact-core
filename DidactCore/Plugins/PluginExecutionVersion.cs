@@ -12,6 +12,14 @@ namespace DidactCore.Plugins
 
         public string LibraryAssemblyVersion { get; set; } = null!;
 
+        public PluginExecutionVersion(string flowTypeName, string flowVersion, string libraryAssemblyName, string libraryAssemblyVersion)
+        {
+            FlowTypeName = flowTypeName;
+            FlowVersion = flowVersion;
+            LibraryAssemblyName = libraryAssemblyName;
+            LibraryAssemblyVersion = libraryAssemblyVersion;
+        }
+
         // Override the Equals method
         public override bool Equals(object obj)
         {
