@@ -2,10 +2,10 @@
 
 namespace DidactCore.Plugins
 {
-    public interface IPluginDependencyInjectionRegistrar
+    public interface IPluginRegistrar
     {
         /// <summary>
-        /// Creates a new <see cref="IServiceCollection"/> containing all dependencies registered in the plugin.
+        /// Creates a new <see cref="IServiceCollection"/> containing all dependencies self-registered in the plugin.
         /// </summary>
         /// <returns></returns>
         IServiceCollection CreateServiceCollection();
