@@ -27,7 +27,7 @@ namespace DidactCore.Plugins
         void ResetServiceCollection();
 
         /// <summary>
-        /// Adds each service from the bridgeServiceCollection to the <see cref="PluginServiceCollection"/>
+        /// Adds each service from the plugin to the <see cref="PluginServiceCollection"/>
         /// and rebuilds the <see cref="PluginServiceProvider"/>.
         /// </summary>
         /// <param name="pluginServiceCollection"></param>
