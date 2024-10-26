@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DidactCore.Plugins
 {
     public interface IPluginContainers
     {
-        ICollection<IPluginContainer> PluginContainers { get; set; }
+        ICollection<IPluginContainer> PluginContainersCollection { get; set; }
 
         DateTime PluginContainersLastUpdatedAt { get; set; }
 
-        IPluginContainers SetPluginContainersLastUpdatedAt(DateTime? pluginContainersLastUpdatedAt)
-        {
-            PluginContainersLastUpdatedAt = pluginContainersLastUpdatedAt ?? DateTime.UtcNow;
-            return this;
-        }
+        void SetPluginContainersLastUpdatedAt(DateTime? pluginContainersLastUpdatedAt);
 
         /// <summary>
         /// Finds a matching <see cref="IPluginContainer"/> for the given <see cref="Type"/>.
@@ -23,25 +18,7 @@ namespace DidactCore.Plugins
         /// <returns></returns>
         /// <exception cref="NoMatchedPluginException"></exception>
         /// <exception cref="MultipleMatchedPluginsException"></exception>
-        IPluginContainer FindMatchingPluginContainer(Type type)
-        {
-            var assemblyFullName = type.Assembly.FullName;
-            var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginAssemblyLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyFullName)
-                    && p.PluginAssemblyLoadContext.Assemblies.SelectMany(s => s.GetTypes()).Contains(type))
-                .ToList();
-
-            if (matchingPluginContainers.Count == 0)
-            {
-                throw new NoMatchedPluginException();
-            }
-            if (matchingPluginContainers.Count > 1)
-            {
-                throw new MultipleMatchedPluginsException();
-            }
-
-            return matchingPluginContainers.First();
-        }
+        IPluginContainer FindMatchingPluginContainer(Type type);
 
         /// <summary>
         /// Finds a matching <see cref="IPluginContainer"/> for the given <see cref="PluginAssemblyLoadContext"/>.
@@ -49,24 +26,7 @@ namespace DidactCore.Plugins
         /// <param name="pluginExecutionVersion"></param>
         /// <returns></returns>
         /// <exception cref="NoMatchedPluginException"></exception>
-        IPluginContainer FindMatchingPluginContainer(PluginExecutionVersion pluginExecutionVersion)
-        {
-            var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginExecutionVersions.Contains(pluginExecutionVersion))
-                .ToList();
-
-            if (matchingPluginContainers.Count == 0)
-            {
-                throw new NoMatchedPluginException();
-            }
-
-            if (matchingPluginContainers.Count > 1)
-            {
-                return matchingPluginContainers.OrderByDescending(p => p.PluginLoadedAt).First();
-            }
-
-            return matchingPluginContainers.First();
-        }
+        IPluginContainer FindMatchingPluginContainer(PluginExecutionVersion pluginExecutionVersion);
 
         /// <summary>
         /// Finds a matching <see cref="IPluginContainer"/> for the given assembly FullName.
@@ -74,24 +34,7 @@ namespace DidactCore.Plugins
         /// <param name="assemblyFullName"></param>
         /// <returns></returns>
         /// <exception cref="NoMatchedPluginException"></exception>
-        IPluginContainer FindMatchingPluginContainer(string assemblyName, string assemblyVersion)
-        {
-            var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginAssemblyLoadContext.Assemblies.Select(a => a.GetName().Name).Contains(assemblyName)
-                    && p.PluginAssemblyLoadContext.Assemblies.Select(a => a.GetName().Version?.ToString() ?? string.Empty).Contains(assemblyVersion))
-                .ToList();
-
-            if (matchingPluginContainers.Count == 0)
-            {
-                throw new NoMatchedPluginException();
-            }
-            if (matchingPluginContainers.Count > 1)
-            {
-                return matchingPluginContainers.OrderByDescending(p => p.PluginLoadedAt).First();
-            }
-
-            return matchingPluginContainers.First();
-        }
+        IPluginContainer FindMatchingPluginContainer(string assemblyName, string assemblyVersion);
 
         /// <summary>
         /// Finds a matching <see cref="IPluginContainer"/> for the given assembly FullName and type Name.
@@ -100,45 +43,10 @@ namespace DidactCore.Plugins
         /// <param name="typeName"></param>
         /// <returns></returns>
         /// <exception cref="NoMatchedPluginException"></exception>
-        IPluginContainer FindMatchingPluginContainer(string assemblyName, string assemblyVersion, string typeName)
-        {
-            var matchingPluginContainers = PluginContainers.Select(s => s)
-                .Where(p => p.PluginAssemblyLoadContext.Assemblies.Select(a => a.FullName).Contains(assemblyName)
-                    && p.PluginAssemblyLoadContext.Assemblies.Select(a => a.GetName().Version?.ToString() ?? string.Empty).Contains(assemblyVersion)
-                    && p.PluginAssemblyLoadContext.Assemblies.SelectMany(a => a.GetTypes()).Select(t => t.Name).Contains(typeName))
-                .ToList();
+        IPluginContainer FindMatchingPluginContainer(string assemblyName, string assemblyVersion, string typeName);
 
-            if (matchingPluginContainers.Count == 0)
-            {
-                throw new NoMatchedPluginException();
-            }
+        void AddPluginContainer(IPluginContainer pluginContainer);
 
-            if (matchingPluginContainers.Count > 1)
-            {
-                return matchingPluginContainers.OrderByDescending(p => p.PluginLoadedAt).First();
-            }
-
-            return matchingPluginContainers.First();
-        }
-
-        void AddPluginContainer(IPluginContainer pluginContainer)
-        {
-            var matchedPluginContainers = PluginContainers.Select(p => p).Where(p => p.Equals(pluginContainer)).ToList();
-            if (matchedPluginContainers.Count == 0)
-            {
-                PluginContainers.Add(pluginContainer);
-            }
-            SetPluginContainersLastUpdatedAt(DateTime.UtcNow);
-        }
-
-        void RemovePluginContainer(IPluginContainer pluginContainer)
-        {
-            var matchedPluginContainers = PluginContainers.Select(p => p).Where(p => p.Equals(pluginContainer)).ToList();
-            if (matchedPluginContainers.Count > 0)
-            {
-                PluginContainers.Remove(pluginContainer);
-            }
-            SetPluginContainersLastUpdatedAt(DateTime.UtcNow);
-        }
+        void RemovePluginContainer(IPluginContainer pluginContainer);
     }
 }
