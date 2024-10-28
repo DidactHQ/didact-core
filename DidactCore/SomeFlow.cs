@@ -1,5 +1,4 @@
 ﻿using DidactCore.Constants;
-using DidactCore.DependencyInjection;
 using DidactCore.Flows;
 using System.Threading.Tasks;
 
@@ -9,13 +8,11 @@ namespace DidactCore
     {
         private readonly IFlowLogger _flowLogger;
         private readonly IFlowConfigurator _flowConfigurator;
-        private readonly IDidactDependencyInjector _didactDependencyInjector;
 
-        public SomeFlow(IFlowLogger flowLogger, IFlowConfigurator flowConfigurator, IDidactDependencyInjector didactDependencyInjector)
+        public SomeFlow(IFlowLogger flowLogger, IFlowConfigurator flowConfigurator)
         {
             _flowLogger = flowLogger;
             _flowConfigurator = flowConfigurator;
-            _didactDependencyInjector = didactDependencyInjector;
         }
 
         public IFlowConfigurator Configure()
