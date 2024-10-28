@@ -6,9 +6,11 @@ namespace DidactCore.Plugins
 {
     public class PluginContainers : IPluginContainers
     {
-        public ICollection<IPluginContainer> PluginContainersCollection { get; set; }
+        public ICollection<IPluginContainer> PluginContainersCollection { get; set; } = [];
 
         public DateTime PluginContainersLastUpdatedAt { get; set; }
+
+        public PluginContainers() { }
 
         public void SetPluginContainersLastUpdatedAt(DateTime? pluginContainersLastUpdatedAt) =>
             PluginContainersLastUpdatedAt = pluginContainersLastUpdatedAt ?? DateTime.UtcNow;
