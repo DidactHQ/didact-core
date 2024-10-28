@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -14,21 +13,19 @@ namespace DidactCore.Plugins
 
         DateTime PluginLoadedAt { get; set; }
 
-        IServiceCollection ApplicationServiceCollection { get; set; }
-
         IPluginDependencyInjector PluginDependencyInjector { get; set; }
 
         /// <summary>
         /// Gets an enumeration of the assemblies from the plugin container's <see cref="DidactCore.Plugins.PluginAssemblyLoadContext"/>.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Assembly> GetAssemblies() => PluginAssemblyLoadContext.Assemblies;
+        IEnumerable<Assembly> GetAssemblies();
 
         /// <summary>
         /// Sets a timestamp for when the plugin was loaded into the plugin container.
         /// </summary>
         /// <param name="pluginLoadedAt"></param>
-        void SetPluginLoadedAt(DateTime pluginLoadedAt);
+        void SetPluginLoadedAt(DateTime? pluginLoadedAt);
 
         /// <summary>
         /// Configures the plugin's dependency injection system.

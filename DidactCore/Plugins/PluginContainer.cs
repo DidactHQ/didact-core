@@ -1,6 +1,5 @@
 ﻿using DidactCore.Constants;
 using DidactCore.Flows;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +10,23 @@ namespace DidactCore.Plugins
 {
     public class PluginContainer : IPluginContainer
     {
-        public PluginAssemblyLoadContext PluginAssemblyLoadContext { get; set; }
+        public PluginAssemblyLoadContext? PluginAssemblyLoadContext { get; set; }
 
-        public ICollection<PluginExecutionVersion> PluginExecutionVersions { get; set; }
+        public ICollection<PluginExecutionVersion> PluginExecutionVersions { get; set; } = [];
 
         public DateTime PluginLoadedAt { get; set; }
 
-        public IServiceCollection ApplicationServiceCollection { get; set; }
-
         public IPluginDependencyInjector PluginDependencyInjector { get; set; }
 
-        public PluginContainer() { }
+        public PluginContainer(IPluginDependencyInjector pluginDependencyInjector)
+        {
+            PluginDependencyInjector = pluginDependencyInjector;
+        }
 
-        public IEnumerable<Assembly> GetAssemblies() => PluginAssemblyLoadContext.Assemblies;
+        // TODO Implement custom exception
+        public IEnumerable<Assembly> GetAssemblies() => PluginAssemblyLoadContext?.Assemblies ?? throw new Exception("Missing ALC!");
 
-        public void SetPluginLoadedAt(DateTime pluginLoadedAt) => PluginLoadedAt = pluginLoadedAt;
+        public void SetPluginLoadedAt(DateTime? pluginLoadedAt) => PluginLoadedAt = pluginLoadedAt ?? DateTime.UtcNow;
 
         public void ConfigureDependencyInjection()
         {
@@ -48,7 +49,6 @@ namespace DidactCore.Plugins
                 throw new Exception("The plugin registrar could not be instantiated.");
             }
 
-            PluginDependencyInjector = new PluginDependencyInjector(ApplicationServiceCollection);
             var pluginServiceCollection = registrar.CreateServiceCollection();
             PluginDependencyInjector.AddAndRebuildServiceCollection(pluginServiceCollection);
         }
