@@ -2,6 +2,7 @@
 using DidactCore.Plugins;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DidactCore.Flows
@@ -17,6 +18,13 @@ namespace DidactCore.Flows
             _engineSupervisor = engineSupervisor ?? throw new ArgumentNullException(nameof(engineSupervisor));
             _flowRepository = flowRepository ?? throw new ArgumentNullException(nameof(flowRepository));
             _flowLogger = flowLogger ?? throw new ArgumentNullException(nameof(flowLogger));
+        }
+
+        public async Task<FlowRunDto> FetchFlowRunAsync()
+        {
+            // TODO Implement
+            await Task.CompletedTask;
+            return new FlowRunDto();
         }
 
         public async Task<FlowRunDto> CreateFlowInstanceAsync(FlowRunDto flowRunDto)
@@ -56,16 +64,19 @@ namespace DidactCore.Flows
             return flowRunDto;
         }
 
-        public async Task ExecuteFlowInstanceAsync(FlowRunDto flowRunDto)
+        public async Task ExecuteFlowRunAsync(FlowRunDto flowRunDto)
         {
             if (flowRunDto.FlowInstance is null)
             {
                 throw new Exception("Oops.");
             }
 
+            // TODO Implement FlowRun cancellationtoken.
+            using var flowRunCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_engineSupervisor.CancellationToken);
+            var flowExecutionContext = new FlowExecutionContext(flowRunDto.FlowRun.JsonPayload, flowRunCancellationTokenSource.Token);
             try
             {
-                await flowRunDto.FlowInstance.ExecuteAsync();
+                await flowRunDto.FlowInstance.ExecuteAsync(flowExecutionContext);
             }
             catch (Exception)
             {
