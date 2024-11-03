@@ -24,6 +24,19 @@ namespace DidactCore.Threading
 
         private readonly BlockingCollection<Task> _tasks;
 
+        /// <summary>
+        /// <para>
+        /// Initializes a custom <see cref="TaskScheduler"/> with a dedicated thread pool for fetching and executing FlowRuns.
+        /// </para>
+        /// <para>
+        /// Remember that we have three essential performance parameters to balance: processor count, thread count, and task count.
+        /// </para>
+        /// </summary>
+        /// <param name="logger">A logger for the scheduler.</param>
+        /// <param name="threadFactor">A factor multipled against <see cref="Environment.ProcessorCount"/> to determine thread count.</param>
+        /// <param name="cancellationToken">A cancellation token useful for engine shutdown events.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public DidactThreadpoolTaskScheduler(ILogger<DidactThreadpoolTaskScheduler> logger, decimal threadFactor, CancellationToken cancellationToken)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -63,6 +76,7 @@ namespace DidactCore.Threading
                 try
                 {
                     // Block the thread to avoid busy waiting.
+                    // Only take one task at a time to evenly distribute work if others are freed.
                     var task = _tasks.Take(_cancellationToken);
                     TryExecuteTask(task);
                 }
