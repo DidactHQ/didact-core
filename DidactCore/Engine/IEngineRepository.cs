@@ -4,6 +4,10 @@ namespace DidactCore.Engine
 {
     public interface IEngineRepository
     {
-        Task CheckForEngineShutdownAsync();
+        Task<bool> CheckForEngineShutdownAsync();
+
+        Task<EngineDto> GetEngineAsync();
+
+        Task<EngineTuningDto> GetEngineTuningAsync();
     }
 }
