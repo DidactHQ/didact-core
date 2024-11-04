@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DidactCore.Engine;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -32,15 +33,12 @@ namespace DidactCore.Threading
         /// Remember that we have three essential performance parameters to balance: processor count, thread count, and task count.
         /// </para>
         /// </summary>
-        /// <param name="logger">A logger for the scheduler.</param>
-        /// <param name="threadFactor">A factor multipled against <see cref="Environment.ProcessorCount"/> to determine thread count.</param>
-        /// <param name="cancellationToken">A cancellation token useful for engine shutdown events.</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public DidactThreadpoolTaskScheduler(ILogger<DidactThreadpoolTaskScheduler> logger, decimal threadFactor, CancellationToken cancellationToken)
+        public DidactThreadpoolTaskScheduler(ILogger<DidactThreadpoolTaskScheduler> logger, IEngineSupervisor engineSupervisor, decimal threadFactor)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _cancellationToken = cancellationToken;
+            _cancellationToken = engineSupervisor.CancellationToken;
             _tasks = [];
 
             var threadCount = (long)Math.Ceiling(Environment.ProcessorCount * threadFactor);
