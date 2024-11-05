@@ -18,5 +18,7 @@ namespace DidactCore.Flows
         Task<FlowRun> UpdateFlowRunAsync(long flowRunId, FlowRun flowRun);
 
         Task DeleteFlowRunAsync(long flowRunId);
+
+        Task<bool> CheckIfFlowRunIsCancelledAsync(long flowRunId);
     }
 }
