@@ -27,7 +27,7 @@ namespace DidactCore.Entities
 
         public DateTime? ExecuteAfter { get; set; }
 
-        public decimal? TimeoutSeconds { get; set; }
+        public int TimeoutSeconds { get; set; }
 
         public int StateId { get; set; }
 
