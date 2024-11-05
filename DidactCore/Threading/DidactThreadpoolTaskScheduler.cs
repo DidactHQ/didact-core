@@ -33,8 +33,6 @@ namespace DidactCore.Threading
         /// Remember that we have three essential performance parameters to balance: processor count, thread count, and task count.
         /// </para>
         /// </summary>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public DidactThreadpoolTaskScheduler(ILogger<DidactThreadpoolTaskScheduler> logger, IEngineSupervisor engineSupervisor, decimal threadFactor)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -80,7 +78,8 @@ namespace DidactCore.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    throw;
+                    // If the engine is shutting down, let the FlowRuns finish gracefully.
+                    // So we will swallow the exception here and not worry about it.
                 }
                 catch (ThreadInterruptedException ex)
                 {
