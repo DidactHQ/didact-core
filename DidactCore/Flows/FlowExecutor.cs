@@ -14,6 +14,10 @@ namespace DidactCore.Flows
         private readonly IFlowRunRepository _flowRunRepository;
         private readonly ILogger<IFlowExecutor> _logger;
         private readonly int _flowRunCancellationCheckInterval;
+        // Create cancellation token for FlowRun cancellations from persistent storage.
+        private readonly CancellationTokenSource _flowRunCancellationTokenSource;
+        // Create cancellation token for FlowRun timeout.
+        private readonly CancellationTokenSource _flowRunTimeoutCancellationTokenSource;
 
         public FlowExecutor(ILogger<IFlowExecutor> logger, IEngineSupervisor engineSupervisor, IFlowRunRepository flowRunRepository)
         {
@@ -21,6 +25,8 @@ namespace DidactCore.Flows
             _flowRunRepository = flowRunRepository ?? throw new ArgumentNullException(nameof(flowRunRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _flowRunCancellationCheckInterval = engineSupervisor.EngineTuning.FlowRunCancellationCheckInterval;
+            _flowRunCancellationTokenSource = new CancellationTokenSource();
+            _flowRunTimeoutCancellationTokenSource = new CancellationTokenSource();
         }
 
         public async Task<FlowRunDto> FetchFlowRunAsync()
@@ -40,11 +46,10 @@ namespace DidactCore.Flows
             }
             catch (NoMatchedPluginException ex)
             {
+                // TODO Implement exception handling.
                 throw;
             }
 
-            // Traverse the AppDomain's assemblies to get the type.
-            // Remember that .NET 5+ only has 1 AppDomain going forward, so CurrentDomain is sufficient.
             var flowType = pluginContainer.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(t => t.Name == flowRunDto.FlowTypeName && t.GetInterfaces().Contains(typeof(IFlow)) && t.IsClass && !t.IsAbstract)
@@ -88,7 +93,7 @@ namespace DidactCore.Flows
 
         public async Task ExecuteFlowRunTimeoutCountdownAsync(int flowRunTimeoutSeconds, CancellationToken compositeCancellationToken)
         {
-            var flowRunTimeoutMilliseconds = flowRunTimeoutSeconds * 1000;
+            var flowRunTimeoutMilliseconds = TimeSpan.FromSeconds(flowRunTimeoutSeconds).Milliseconds;
             await Task.Delay(flowRunTimeoutMilliseconds, compositeCancellationToken);
         } 
 
@@ -106,7 +111,21 @@ namespace DidactCore.Flows
             }
             catch (OperationCanceledException)
             {
-                await _flowRunRepository.CancelFlowRunAsync(flowRunDto.FlowRunId);
+                // FlowRun cancellation request was made from persistent storage.
+                if (_flowRunCancellationTokenSource.IsCancellationRequested)
+                {
+                    await _flowRunRepository.CancelFlowRunAsync(flowRunDto.FlowRunId);
+                }
+                // FlowRun timed out.
+                else if (_flowRunTimeoutCancellationTokenSource.IsCancellationRequested)
+                {
+                    await _flowRunRepository.TimeoutFlowRunAsync(flowRunDto.FlowRunId);
+                }
+                // FlowRun threw this exception for some other reason like an internal cancellation from ExecuteAsync.
+                else
+                {
+                    await _flowRunRepository.CancelFlowRunAsync(flowRunDto.FlowRunId);
+                }
             }
             catch (Exception)
             {
@@ -114,17 +133,14 @@ namespace DidactCore.Flows
                 // Handle retries here.
                 // After final failure, log to storage.
                 // Do not actually throw;
+                return;
             }
         }
 
         public async Task ExecuteIntelligentAsync(FlowRunDto flowRunDto)
-        {
-            // Create cancellation token for FlowRun cancellations from persistent storage.
-            using var flowRunCancellationTokenSource = new CancellationTokenSource();
-            // Create cancellation token for FlowRun timeout.
-            using var flowRunTimeoutCancellationTokenSource = new CancellationTokenSource();
+        {            
             // Create a composite cancellation token for engine shutdown, FlowRun cancellation, and FlowRun timeout.
-            using var compositeCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(flowRunCancellationTokenSource.Token, flowRunTimeoutCancellationTokenSource.Token, _engineSupervisor.CancellationToken);
+            using var compositeCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_flowRunCancellationTokenSource.Token, _flowRunTimeoutCancellationTokenSource.Token, _engineSupervisor.CancellationToken);
             var compositeCancellationToken = compositeCancellationTokenSource.Token;
             
             var flowRunExecutionTask = ExecuteFlowRunAsync(flowRunDto, compositeCancellationToken);
@@ -134,15 +150,19 @@ namespace DidactCore.Flows
             var completedTask = await Task.WhenAny(flowRunExecutionTask, flowRunCancellationCheckTask, flowRunTimeoutTask);
             if (completedTask == flowRunCancellationCheckTask)
             {
-                // TODO Handle cancellation reason.
-                flowRunCancellationTokenSource?.Cancel();
+                _flowRunCancellationTokenSource?.Cancel();
                 await flowRunExecutionTask;
             }
             else if (completedTask == flowRunTimeoutTask)
             {
-                // TODO Handle timeout cancellation reason.
-                flowRunTimeoutCancellationTokenSource?.Cancel();
+                _flowRunTimeoutCancellationTokenSource?.Cancel();
                 await flowRunExecutionTask;
+            }
+            else if (completedTask == flowRunExecutionTask)
+            {
+                // Don't bother awaiting the cancellation check task or the timeout task.
+                // We don't care about them once the FlowRun completes, so just cancel them.
+                compositeCancellationTokenSource.Cancel();
             }
         }
     }
