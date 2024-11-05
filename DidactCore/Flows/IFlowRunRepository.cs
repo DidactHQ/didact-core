@@ -22,5 +22,9 @@ namespace DidactCore.Flows
         Task<bool> CheckIfFlowRunIsCancelledAsync(long flowRunId);
 
         Task CancelFlowRunAsync(long flowRunId);
+
+        Task TimeoutFlowRunAsync(long flowRunId);
+
+        Task FailFlowRunAsync(long flowRunId);
     }
 }
