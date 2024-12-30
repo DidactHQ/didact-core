@@ -1,5 +1,4 @@
 ﻿using DidactCore.Plugins;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +10,8 @@ namespace DidactCore.Engine
         long EngineId { get; set; }
 
         Guid EngineUniversalId { get; set; }
+
+        EngineTuningDto EngineTuning { get; set; }
 
         string EngineState { get; set; }
 
