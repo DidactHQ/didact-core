@@ -20,8 +20,9 @@ namespace DidactCore
             _block2 = blockFactory.CreateActionBlock<int>();
         }
 
-        public IFlowConfigurator Configure()
+        public async Task<IFlowConfigurator> ConfigureAsync()
         {
+            await Task.CompletedTask;
             return _flowConfigurator
                 .WithTypeName(GetType().Name)
                 .WithName("SomeFlow Custom Name")

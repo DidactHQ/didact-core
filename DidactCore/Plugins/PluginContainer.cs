@@ -53,7 +53,7 @@ namespace DidactCore.Plugins
             PluginDependencyInjector.AddAndRebuildServiceCollection(pluginServiceCollection);
         }
 
-        public void CollectPluginExecutionVersions()
+        public async Task CollectPluginExecutionVersionsAsync()
         {
             var flowConfigurators = new List<FlowConfiguratorDto>();
             var flowTypes = GetAssemblies()
@@ -69,7 +69,7 @@ namespace DidactCore.Plugins
                     continue;
                 }
 
-                var flowConfigurator = iflow.Configure();
+                var flowConfigurator = await iflow.ConfigureAsync();
 
                 var flowTypeName = flowConfigurator.TypeName;
                 var flowVersion = flowConfigurator.Version;
@@ -121,7 +121,7 @@ namespace DidactCore.Plugins
             {
                 try
                 {
-                    var iFlowConfigurator = flowConfiguratorDto.FlowInstance!.Configure();
+                    var iFlowConfigurator = await flowConfiguratorDto.FlowInstance!.ConfigureAsync();
                     await _flowRepository.SaveConfigurationsAsync(iFlowConfigurator);
                     flowConfiguratorDto.State = FlowConfiguratorStates.FlowConfigurationSuccessful;
                 }

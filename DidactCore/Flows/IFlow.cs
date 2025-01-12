@@ -5,10 +5,10 @@ namespace DidactCore.Flows
     public interface IFlow
     {
         /// <summary>
-        /// Configures the Flow metadata as a returned <see cref="IFlowConfigurator"/>.
+        /// Asynchronously configures the Flow metadata as a returned <see cref="IFlowConfigurator"/>.
         /// </summary>
         /// <returns></returns>
-        IFlowConfigurator Configure();
+        Task<IFlowConfigurator> ConfigureAsync();
 
         /// <summary>
         /// Asynchronously executes the Flow.

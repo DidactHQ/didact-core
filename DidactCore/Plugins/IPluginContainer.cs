@@ -36,7 +36,7 @@ namespace DidactCore.Plugins
         /// Retrieves and instantiates all Flow types to generate their configurators.
         /// Then uses the configurators and reflection to determine each Flow's <see cref="PluginExecutionVersion"/>.
         /// </summary>
-        void CollectPluginExecutionVersions();
+        Task CollectPluginExecutionVersionsAsync();
 
         /// <summary>
         /// Retrieves all Flow types from the plugin's assemblies using reflection,
