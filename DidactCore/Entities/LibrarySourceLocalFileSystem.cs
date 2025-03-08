@@ -8,7 +8,7 @@ namespace DidactCore.Entities
 
         public long LibrarySourceId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public string FolderPath { get; set; } = null!;
 

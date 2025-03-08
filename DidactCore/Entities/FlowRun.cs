@@ -11,7 +11,7 @@ namespace DidactCore.Entities
 
         public long ExecutionVersionId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public long? ParentFlowRunId { get; set; }
 
@@ -53,7 +53,7 @@ namespace DidactCore.Entities
 
         public virtual FlowVersion FlowVersion { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
+        public virtual Environment Environment { get; set; } = null!;
 
         public virtual State State { get; set; } = null!;
 

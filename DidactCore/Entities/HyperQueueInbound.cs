@@ -6,7 +6,7 @@ namespace DidactCore.Entities
     {
         public long HyperQueueInboundId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public int HyperQueueId { get; set; }
 
@@ -22,7 +22,7 @@ namespace DidactCore.Entities
 
         public byte[] RowVersion { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
+        public virtual Environment Environment { get; set; } = null!;
 
         public virtual HyperQueue HyperQueue { get; set; } = null!;
 

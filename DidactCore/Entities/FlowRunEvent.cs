@@ -10,7 +10,7 @@ namespace DidactCore.Entities
 
         public int FlowRunEventTypeId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public DateTime OccurredAt { get; set; }
 
@@ -28,6 +28,6 @@ namespace DidactCore.Entities
 
         public virtual FlowRunEventType FlowRunEventType { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
+        public virtual Environment Environment { get; set; } = null!;
     }
 }

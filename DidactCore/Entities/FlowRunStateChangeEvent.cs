@@ -8,7 +8,7 @@ namespace DidactCore.Entities
 
         public long FlowRunEventId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public string PreviousState { get; set; } = null!;
 

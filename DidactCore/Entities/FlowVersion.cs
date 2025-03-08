@@ -9,7 +9,7 @@ namespace DidactCore.Entities
 
         public long FlowId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public string Version { get; set; } = null!;
 
@@ -27,7 +27,7 @@ namespace DidactCore.Entities
 
         public virtual Flow Flow { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
+        public virtual Environment Environment { get; set; } = null!;
 
         public virtual ICollection<FlowRun> FlowRuns { get; } = new List<FlowRun>();
     }

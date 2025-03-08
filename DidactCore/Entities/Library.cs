@@ -6,7 +6,7 @@ namespace DidactCore.Entities
     {
         public long LibraryId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public string AssemblyName { get; set; } = null!;
 
