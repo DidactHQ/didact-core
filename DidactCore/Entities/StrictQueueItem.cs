@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace DidactCore.Entities
 {
-    public class FifoQueue
+    public class StrictQueueItem
     {
-        public int FifoQueueId { get; set; }
+        public long StrictQueueItemId { get; set; }
 
         public long EnvironmentId { get; set; }
 
-        public string Name { get; set; } = null!;
+        public int StrictQueueId { get; set; }
 
-        public string? Description { get; set; }
+        public long FlowRunId { get; set; }
 
         public DateTime Created { get; set; }
 
@@ -21,12 +20,12 @@ namespace DidactCore.Entities
 
         public string LastUpdatedBy { get; set; } = null!;
 
-        public bool Active { get; set; }
-
         public byte[] RowVersion { get; set; } = null!;
+
+        public virtual StrictQueue StrictQueue { get; set; } = null!;
 
         public virtual Environment Environment { get; set; } = null!;
 
-        public virtual ICollection<FifoQueueItem> FifoQueueItems { get; } = new List<FifoQueueItem>();
+        public virtual FlowRun FlowRun { get; set; } = null!;
     }
 }
