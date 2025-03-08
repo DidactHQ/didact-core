@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace DidactCore.Entities
 {
-    public class HyperQueue
+    public class QueueDirection
     {
-        public int HyperQueueId { get; set; }
-
         public int QueueDirectionId { get; set; }
-
-        public long EnvironmentId { get; set; }
 
         public string Name { get; set; } = null!;
 
-        public string? Description { get; set; }
+        public string Description { get; set; } = null!;
 
         public DateTime Created { get; set; }
 
@@ -26,11 +21,5 @@ namespace DidactCore.Entities
         public bool Active { get; set; }
 
         public byte[] RowVersion { get; set; } = null!;
-
-        public virtual QueueDirection QueueDirection { get; set; } = null!;
-
-        public virtual Environment Environment { get; set; } = null!;
-
-        public virtual ICollection<HyperQueueItem> HyperQueueItems { get; } = new List<HyperQueueItem>();
     }
 }
