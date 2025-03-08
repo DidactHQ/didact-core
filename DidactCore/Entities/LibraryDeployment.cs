@@ -2,11 +2,11 @@
 
 namespace DidactCore.Entities
 {
-    public class LibrarySource
+    public class LibraryDeployment
     {
-        public long LibrarySourceId { get; set; }
+        public long LibraryDeploymentId { get; set; }
 
-        public int LibrarySourceTypeId { get; set; }
+        public int LibraryDeploymentTypeId { get; set; }
 
         public long LibraryId { get; set; }
 

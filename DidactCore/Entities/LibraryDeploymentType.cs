@@ -2,15 +2,13 @@
 
 namespace DidactCore.Entities
 {
-    public class LibrarySourceLocalFileSystem
+    public class LibraryDeploymentType
     {
-        public long LibrarySourceLocalFileSystemId { get; set; }
+        public int LibraryDeploymentTypeId { get; set; }
 
-        public long LibrarySourceId { get; set; }
+        public string Name { get; set; } = null!;
 
-        public long EnvironmentId { get; set; }
-
-        public string FolderPath { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
         public DateTime Created { get; set; }
 
