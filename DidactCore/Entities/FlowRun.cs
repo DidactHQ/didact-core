@@ -65,6 +65,6 @@ namespace DidactCore.Entities
 
         public virtual ICollection<HyperQueueItem> HyperQueueItems { get; } = new List<HyperQueueItem>();
 
-        public virtual ICollection<FifoQueueItem> FifoQueueItems { get; } = new List<FifoQueueItem>();
+        public virtual ICollection<StrictQueueItem> StrictQueueItems { get; } = new List<StrictQueueItem>();
     }
 }

@@ -31,11 +31,11 @@ namespace DidactCore.Entities
 
         public virtual ICollection<HyperQueue> HyperQueues { get; } = new List<HyperQueue>();
 
-        public virtual ICollection<FifoQueue> FifoQueues { get; } = new List<FifoQueue>();
+        public virtual ICollection<StrictQueue> StrictQueues { get; } = new List<StrictQueue>();
 
         public virtual ICollection<HyperQueueItem> HyperQueueItems { get; } = new List<HyperQueueItem>();
 
-        public virtual ICollection<FifoQueueItem> FifoQueueItems { get; } = new List<FifoQueueItem>();
+        public virtual ICollection<StrictQueueItem> StrictQueueItems { get; } = new List<StrictQueueItem>();
 
         public virtual ICollection<Engine> Engines { get; } = new List<Engine>();
     }
