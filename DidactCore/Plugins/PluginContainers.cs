@@ -8,12 +8,12 @@ namespace DidactCore.Plugins
     {
         public ICollection<IPluginContainer> PluginContainersCollection { get; set; } = [];
 
-        public DateTime PluginContainersLastUpdatedAt { get; set; }
+        public DateTime PluginContainersUpdatedAt { get; set; }
 
         public PluginContainers() { }
 
-        public void SetPluginContainersLastUpdatedAt(DateTime? pluginContainersLastUpdatedAt) =>
-            PluginContainersLastUpdatedAt = pluginContainersLastUpdatedAt ?? DateTime.UtcNow;
+        public void SetPluginContainersUpdatedAt(DateTime? pluginContainersUpdatedAt) =>
+            PluginContainersUpdatedAt = pluginContainersUpdatedAt ?? DateTime.UtcNow;
 
         public IPluginContainer FindMatchingPluginContainer(Type type)
         {
@@ -101,7 +101,7 @@ namespace DidactCore.Plugins
             {
                 PluginContainersCollection.Add(pluginContainer);
             }
-            SetPluginContainersLastUpdatedAt(DateTime.UtcNow);
+            SetPluginContainersUpdatedAt(DateTime.UtcNow);
         }
 
         public void RemovePluginContainer(IPluginContainer pluginContainer)
@@ -111,7 +111,7 @@ namespace DidactCore.Plugins
             {
                 PluginContainersCollection.Remove(pluginContainer);
             }
-            SetPluginContainersLastUpdatedAt(DateTime.UtcNow);
+            SetPluginContainersUpdatedAt(DateTime.UtcNow);
         }
     }
 }

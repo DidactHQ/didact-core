@@ -22,17 +22,17 @@ namespace DidactCore.Entities
 
         public int StateId { get; set; }
 
-        public DateTime StateLastUpdated { get; set; }
+        public DateTime StateUpdated { get; set; }
 
-        public string StateLastUpdatedBy { get; set; } = null!;
+        public string StateUpdatedBy { get; set; } = null!;
 
         public DateTime Created { get; set; }
 
         public string CreatedBy { get; set; } = null!;
 
-        public DateTime LastUpdated { get; set; }
+        public DateTime Updated { get; set; }
 
-        public string LastUpdatedBy { get; set; } = null!;
+        public string UpdatedBy { get; set; } = null!;
 
         public bool Active { get; set; }
 

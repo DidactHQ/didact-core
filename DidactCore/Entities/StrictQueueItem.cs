@@ -16,9 +16,9 @@ namespace DidactCore.Entities
 
         public string CreatedBy { get; set; } = null!;
 
-        public DateTime LastUpdated { get; set; }
+        public DateTime Updated { get; set; }
 
-        public string LastUpdatedBy { get; set; } = null!;
+        public string UpdatedBy { get; set; } = null!;
 
         public byte[] RowVersion { get; set; } = null!;
 

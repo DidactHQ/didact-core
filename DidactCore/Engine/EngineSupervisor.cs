@@ -26,7 +26,7 @@ namespace DidactCore.Engine
 
         public CancellationToken CancellationToken { get; set; }
 
-        public DateTime EngineStateLastUpdated { get; set; } = DateTime.Now;
+        public DateTime EngineStateUpdated { get; set; } = DateTime.Now;
 
         public IPluginContainers? PluginContainers { get; set; }
 
@@ -44,7 +44,7 @@ namespace DidactCore.Engine
         public void SetEngineState(string engineState)
         {
             EngineState = engineState;
-            EngineStateLastUpdated = DateTime.Now;
+            EngineStateUpdated = DateTime.Now;
         }
 
         public async Task CheckForEngineShutdownEventAsync()
@@ -58,9 +58,9 @@ namespace DidactCore.Engine
             return EngineState;
         }
 
-        public DateTime GetEngineStateLastUpdated()
+        public DateTime GetEngineStateUpdated()
         {
-            return EngineStateLastUpdated;
+            return EngineStateUpdated;
         }
     }
 }
