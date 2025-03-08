@@ -2,9 +2,9 @@
 
 namespace DidactCore.Entities
 {
-    public class HyperQueueInbound
+    public class HyperQueueItem
     {
-        public long HyperQueueInboundId { get; set; }
+        public long HyperQueueItemId { get; set; }
 
         public long EnvironmentId { get; set; }
 

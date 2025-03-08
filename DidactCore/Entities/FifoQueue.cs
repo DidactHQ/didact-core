@@ -27,6 +27,6 @@ namespace DidactCore.Entities
 
         public virtual Environment Environment { get; set; } = null!;
 
-        public virtual ICollection<FifoQueueInbound> FifoQueueInbounds { get; } = new List<FifoQueueInbound>();
+        public virtual ICollection<FifoQueueItem> FifoQueueItems { get; } = new List<FifoQueueItem>();
     }
 }

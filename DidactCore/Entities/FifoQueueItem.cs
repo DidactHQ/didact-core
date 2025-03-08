@@ -2,9 +2,9 @@
 
 namespace DidactCore.Entities
 {
-    public class FifoQueueInbound
+    public class FifoQueueItem
     {
-        public long FifoQueueInboundId { get; set; }
+        public long FifoQueueItemId { get; set; }
 
         public long EnvironmentId { get; set; }
 

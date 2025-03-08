@@ -27,6 +27,6 @@ namespace DidactCore.Entities
 
         public virtual Environment Environment { get; set; } = null!;
 
-        public virtual ICollection<HyperQueueInbound> HyperQueueInbounds { get; } = new List<HyperQueueInbound>();
+        public virtual ICollection<HyperQueueItem> HyperQueueItems { get; } = new List<HyperQueueItem>();
     }
 }

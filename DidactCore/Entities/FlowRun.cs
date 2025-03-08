@@ -63,8 +63,8 @@ namespace DidactCore.Entities
 
         public virtual ICollection<BlockRun> BlockRuns { get; set; } = new List<BlockRun>();
 
-        public virtual ICollection<HyperQueueInbound> HyperQueueInbounds { get; } = new List<HyperQueueInbound>();
+        public virtual ICollection<HyperQueueItem> HyperQueueItems { get; } = new List<HyperQueueItem>();
 
-        public virtual ICollection<FifoQueueInbound> FifoQueueInbounds { get; } = new List<FifoQueueInbound>();
+        public virtual ICollection<FifoQueueItem> FifoQueueItems { get; } = new List<FifoQueueItem>();
     }
 }
