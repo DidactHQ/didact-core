@@ -2,9 +2,9 @@
 
 namespace DidactCore.Entities
 {
-    public class LibrarySourceType
+    public class LibraryDeploymentType
     {
-        public int LibrarySourceTypeId { get; set; }
+        public int LibraryDeploymentTypeId { get; set; }
 
         public string Name { get; set; } = null!;
 
@@ -14,9 +14,9 @@ namespace DidactCore.Entities
 
         public string CreatedBy { get; set; } = null!;
 
-        public DateTime LastUpdated { get; set; }
+        public DateTime Updated { get; set; }
 
-        public string LastUpdatedBy { get; set; } = null!;
+        public string UpdatedBy { get; set; } = null!;
 
         public bool Active { get; set; }
 

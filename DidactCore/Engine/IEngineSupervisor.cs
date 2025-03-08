@@ -17,7 +17,7 @@ namespace DidactCore.Engine
 
         CancellationToken CancellationToken { get; set; }
 
-        DateTime EngineStateLastUpdated { get; set; }
+        DateTime EngineStateUpdated { get; set; }
 
         IPluginContainers PluginContainers { get; set; }
 
@@ -27,6 +27,6 @@ namespace DidactCore.Engine
 
         string GetEngineState();
 
-        DateTime GetEngineStateLastUpdated();
+        DateTime GetEngineStateUpdated();
     }
 }

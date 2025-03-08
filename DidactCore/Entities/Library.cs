@@ -6,7 +6,7 @@ namespace DidactCore.Entities
     {
         public long LibraryId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public string AssemblyName { get; set; } = null!;
 
@@ -14,9 +14,9 @@ namespace DidactCore.Entities
 
         public string CreatedBy { get; set; } = null!;
 
-        public DateTime LastUpdated { get; set; }
+        public DateTime Updated { get; set; }
 
-        public string LastUpdatedBy { get; set; } = null!;
+        public string UpdatedBy { get; set; } = null!;
 
         public bool Active { get; set; }
 

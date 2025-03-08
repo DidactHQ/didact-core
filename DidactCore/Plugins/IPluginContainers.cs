@@ -7,9 +7,9 @@ namespace DidactCore.Plugins
     {
         ICollection<IPluginContainer> PluginContainersCollection { get; set; }
 
-        DateTime PluginContainersLastUpdatedAt { get; set; }
+        DateTime PluginContainersUpdatedAt { get; set; }
 
-        void SetPluginContainersLastUpdatedAt(DateTime? pluginContainersLastUpdatedAt);
+        void SetPluginContainersUpdatedAt(DateTime? pluginContainersUpdatedAt);
 
         /// <summary>
         /// Finds a matching <see cref="IPluginContainer"/> for the given <see cref="Type"/>.

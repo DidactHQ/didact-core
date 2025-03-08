@@ -7,7 +7,7 @@ namespace DidactCore.Entities
     {
         public long FlowId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public long LibraryId { get; set; }
 
@@ -25,15 +25,15 @@ namespace DidactCore.Entities
 
         public string CreatedBy { get; set; } = null!;
 
-        public DateTime LastUpdated { get; set; }
+        public DateTime Updated { get; set; }
 
-        public string LastUpdatedBy { get; set; } = null!;
+        public string UpdatedBy { get; set; } = null!;
 
         public bool Active { get; set; }
 
         public byte[] RowVersion { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
+        public virtual Environment Environment { get; set; } = null!;
 
         public virtual ExecutionMode ExecutionMode { get; set; } = null!;
 

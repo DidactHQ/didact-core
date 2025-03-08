@@ -8,7 +8,7 @@ namespace DidactCore.Entities
 
         public long FlowRunEventId { get; set; }
 
-        public int OrganizationId { get; set; }
+        public long EnvironmentId { get; set; }
 
         public string LogLevel { get; set; } = null!;
 
@@ -20,14 +20,14 @@ namespace DidactCore.Entities
 
         public string CreatedBy { get; set; } = null!;
 
-        public DateTime LastUpdated { get; set; }
+        public DateTime Updated { get; set; }
 
-        public string LastUpdatedBy { get; set; } = null!;
+        public string UpdatedBy { get; set; } = null!;
 
         public byte[] RowVersion { get; set; } = null!;
 
         public virtual FlowRunEvent FlowRunEvent { get; set; } = null!;
 
-        public virtual Organization Organization { get; set; } = null!;
+        public virtual Environment Environment { get; set; } = null!;
     }
 }

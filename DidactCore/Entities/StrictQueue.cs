@@ -3,9 +3,13 @@ using System.Collections.Generic;
 
 namespace DidactCore.Entities
 {
-    public class ExecutionMode
+    public class StrictQueue
     {
-        public int ExecutionModeId { get; set; }
+        public int StrictQueueId { get; set; }
+
+        public int QueueDirectionId { get; set; }
+
+        public long EnvironmentId { get; set; }
 
         public string Name { get; set; } = null!;
 
@@ -23,8 +27,10 @@ namespace DidactCore.Entities
 
         public byte[] RowVersion { get; set; } = null!;
 
-        public virtual ICollection<Flow> Flows { get; } = new List<Flow>();
+        public virtual QueueDirection QueueDirection { get; set; } = null!;
 
-        public virtual ICollection<FlowRun> FlowRuns { get; } = new List<FlowRun>();
+        public virtual Environment Environment { get; set; } = null!;
+
+        public virtual ICollection<StrictQueueItem> StrictQueueItems { get; } = new List<StrictQueueItem>();
     }
 }
