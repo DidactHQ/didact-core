@@ -9,13 +9,11 @@ namespace DidactCore.Entities
 
         public long FlowId { get; set; }
 
+        public long TriggerId { get; set; }
+
         public long ExecutionVersionId { get; set; }
 
         public long EnvironmentId { get; set; }
-
-        public long? ParentFlowRunId { get; set; }
-
-        public int TriggerTypeId { get; set; }
 
         public int ExecutionModeId { get; set; }
 
@@ -57,7 +55,7 @@ namespace DidactCore.Entities
 
         public virtual State State { get; set; } = null!;
 
-        public virtual TriggerType TriggerType { get; set; } = null!;
+        public virtual Trigger Trigger { get; set; } = null!;
 
         public virtual ExecutionMode ExecutionMode { get; set; } = null!;
 
