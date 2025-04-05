@@ -69,7 +69,8 @@ namespace DidactCore.Plugins
                     continue;
                 }
 
-                var flowConfigurator = await iflow.ConfigureAsync();
+                var newFlowConfigurator = PluginDependencyInjector.CreateInstance<IFlowConfigurator>();
+                var flowConfigurator = await iflow.ConfigureAsync(newFlowConfigurator);
 
                 var flowTypeName = flowConfigurator.TypeName;
                 var flowVersion = flowConfigurator.Version;
@@ -121,8 +122,9 @@ namespace DidactCore.Plugins
             {
                 try
                 {
-                    var iFlowConfigurator = await flowConfiguratorDto.FlowInstance!.ConfigureAsync();
-                    await _flowRepository.SaveConfigurationsAsync(iFlowConfigurator);
+                    var newFlowConfigurator = PluginDependencyInjector.CreateInstance<IFlowConfigurator>();
+                    var iFlowConfigurator = await flowConfiguratorDto.FlowInstance!.ConfigureAsync(newFlowConfigurator);
+                    //await _flowRepository.SaveConfigurationsAsync(iFlowConfigurator);
                     flowConfiguratorDto.State = FlowConfiguratorStates.FlowConfigurationSuccessful;
                 }
                 catch (Exception ex)
