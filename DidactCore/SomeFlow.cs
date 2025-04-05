@@ -8,22 +8,20 @@ namespace DidactCore
     public class SomeFlow : IFlow
     {
         private readonly IFlowLogger _flowLogger;
-        private readonly IFlowConfigurator _flowConfigurator;
         private readonly ActionBlock<string> _block1;
         private readonly ActionBlock<int> _block2;
 
-        public SomeFlow(IFlowLogger flowLogger, IFlowConfigurator flowConfigurator, IBlockFactory blockFactory)
+        public SomeFlow(IFlowLogger flowLogger, IBlockFactory blockFactory)
         {
             _flowLogger = flowLogger;
-            _flowConfigurator = flowConfigurator;
             _block1 = blockFactory.CreateActionBlock<string>();
             _block2 = blockFactory.CreateActionBlock<int>();
         }
 
-        public async Task<IFlowConfigurator> ConfigureAsync()
+        public async Task<IFlowConfigurator> ConfigureAsync(IFlowConfigurator flowConfigurator)
         {
             await Task.CompletedTask;
-            return _flowConfigurator
+            return flowConfigurator
                 .WithTypeName(GetType().Name)
                 .WithName("SomeFlow Custom Name")
                 .WithDescription("A flow description.")
