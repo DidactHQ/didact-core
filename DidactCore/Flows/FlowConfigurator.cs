@@ -15,13 +15,13 @@ namespace DidactCore.Flows
 
         public string Description { get; private set; }
 
-        public string Version { get; private set; } = "v1.0.0";
+        public string Version { get; private set; } = DidactDefaults.DefaultFlowVersion;
 
         public string TypeName { get; private set; }
 
         public string QueueType { get; private set; } = QueueTypes.HyperQueue;
 
-        public string QueueName { get; private set; } = "Default";
+        public string QueueName { get; private set; } = DidactDefaults.DefaultQueueName;
 
         public TimeSpan? Delay { get; private set; } = null;
 
