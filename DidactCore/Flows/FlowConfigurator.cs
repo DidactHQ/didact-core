@@ -25,8 +25,6 @@ namespace DidactCore.Flows
 
         public TimeSpan? Delay { get; private set; } = null;
 
-        public string CronExpression { get; private set; }
-
         public DateTime? StartDateTime { get; private set; }
 
         public DateTime? EndDateTime { get; private set; }
@@ -71,14 +69,6 @@ namespace DidactCore.Flows
         public IFlowConfigurator WithDelay(TimeSpan delay)
         {
             Delay = delay;
-            return this;
-        }
-
-        public IFlowConfigurator WithCronSchedule(string cronExpression, DateTime? startDateTime = null, DateTime? endDateTime = null)
-        {
-            CronExpression = cronExpression;
-            StartDateTime = startDateTime;
-            EndDateTime = endDateTime;
             return this;
         }
 

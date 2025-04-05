@@ -26,8 +26,7 @@ namespace DidactCore
                 .WithName("SomeFlow Custom Name")
                 .WithDescription("A flow description.")
                 .AsVersion("1.0-alpha")
-                .ForQueue(QueueTypes.HyperQueue, "Default")
-                .WithCronSchedule("0 * * * *");
+                .ForQueue(QueueTypes.HyperQueue, "Default");
         }
 
         public async Task ExecuteAsync(IFlowExecutionContext context)

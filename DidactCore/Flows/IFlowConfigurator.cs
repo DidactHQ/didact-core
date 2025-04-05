@@ -47,11 +47,6 @@ namespace DidactCore.Flows
         TimeSpan? Delay { get; }
 
         /// <summary>
-        /// The CRON schedule for the Flow.
-        /// </summary>
-        string CronExpression { get; }
-
-        /// <summary>
         /// The optional start datetime of the Flow's CRON schedule.
         /// </summary>
         DateTime? StartDateTime { get; }
@@ -103,20 +98,6 @@ namespace DidactCore.Flows
         /// <param name="delay"></param>
         /// <returns></returns>
         IFlowConfigurator WithDelay(TimeSpan delay);
-
-        /// <summary>
-        /// <para>
-        ///     Sets a CRON schedule for the Flow.
-        /// </para>
-        /// <para>
-        ///     The schedule has an optional start datetime and end datetime.
-        /// </para>
-        /// </summary>
-        /// <param name="cronExpression"></param>
-        /// <param name="startDateTime"></param>
-        /// <param name="endDateTime"></param>
-        /// <returns></returns>
-        IFlowConfigurator WithCronSchedule(string cronExpression, DateTime? startDateTime = null, DateTime? endDateTime = null);
 
         /// <summary>
         /// Asynchronously saves the Flow configurations to persistent storage.
