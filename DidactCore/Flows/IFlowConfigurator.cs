@@ -90,7 +90,7 @@ namespace DidactCore.Flows
         /// <param name="queueType"></param>
         /// <param name="queueName"></param>
         /// <returns></returns>
-        IFlowConfigurator ForQueue(string queueType, string queueName);
+        IFlowConfigurator ForQueue(string queueType, string queueName = DidactDefaults.DefaultQueueName);
 
         /// <summary>
         /// Sets a delay for the Flow when it is enqueued. The delay is a TimeSpan object, so it should be easy to delay by seconds, minutes, hours, etc.

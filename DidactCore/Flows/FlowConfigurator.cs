@@ -59,7 +59,7 @@ namespace DidactCore.Flows
             return this;
         }
 
-        public IFlowConfigurator ForQueue(string queueType, string queueName = "Default")
+        public IFlowConfigurator ForQueue(string queueType, string queueName = DidactDefaults.DefaultQueueName)
         {
             QueueType = queueType;
             QueueName = queueName;
