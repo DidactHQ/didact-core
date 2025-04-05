@@ -17,15 +17,12 @@
 
         /// <summary>
         /// <para>
-        /// A queue type designated for strict, guaranteed ordering on a first in, first out basis.
+        /// A queue type designated for strict, guaranteed ordering.
         /// </para>
         /// <para>
-        /// Because ordering is strictly enforced, a fifo queue will necessarily sacrifice throughput.
-        /// </para>
-        /// <para>
-        /// Each Flow must be successfully completed before it is removed from the queue. This behavior is enforced in the database model and is therefore compatible with distributed environments.
+        /// Because ordering is strictly enforced, a strict queue will necessarily sacrifice throughput.
         /// </para>
         /// </summary>
-        public const string FifoQueue = "Fifo Queue";
+        public const string StrictQueue = "Strict Queue";
     }
 }
