@@ -8,10 +8,6 @@ namespace DidactCore.Entities
 
         public long TriggerId { get; set; }
 
-        public string? Name { get; set; }
-
-        public string? Description { get; set; }
-
         public string CronExpression { get; set; } = null!;
 
         public DateTime Created { get; set; }
