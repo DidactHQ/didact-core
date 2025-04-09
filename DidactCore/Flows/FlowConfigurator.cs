@@ -22,9 +22,9 @@ namespace DidactCore.Flows
 
         public string? TypeName { get; private set; }
 
-        public string QueueType { get; private set; } = QueueTypes.HyperQueue;
+        public string DefaultQueueType { get; private set; } = QueueTypes.HyperQueue;
 
-        public string QueueName { get; private set; } = Defaults.DefaultQueueName;
+        public string DefaultQueueName { get; private set; } = Defaults.DefaultQueueName;
 
         public ICollection<ICronScheduleTrigger> CronScheduleTriggers { get; private set; } = [];
 
@@ -60,10 +60,10 @@ namespace DidactCore.Flows
             return this;
         }
 
-        public IFlowConfigurator ForQueue(string queueType, string queueName = Defaults.DefaultQueueName)
+        public IFlowConfigurator WithDefaultQueue(string queueType, string queueName = Defaults.DefaultQueueName)
         {
-            QueueType = queueType;
-            QueueName = queueName;
+            DefaultQueueType = queueType;
+            DefaultQueueName = queueName;
             return this;
         }
 

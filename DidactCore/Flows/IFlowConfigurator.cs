@@ -33,15 +33,15 @@ namespace DidactCore.Flows
         string? TypeName { get; }
 
         /// <summary>
-        /// The designated queue type that the Flow will execute against. The default type is HyperQueue.
+        /// The designated queue type that the Flow will execute against.
         /// </summary>
         /// <see cref="QueueTypes.HyperQueue"/>
-        string QueueType { get; }
+        string DefaultQueueType { get; }
 
         /// <summary>
-        /// The designated queue that the Flow will execute against. The default name is "default".
+        /// The designated queue that the Flow will execute against.
         /// </summary>
-        string QueueName { get; }
+        string DefaultQueueName { get; }
 
         /// <summary>
         /// The collection of Cron Scheduler triggers for the Flow.
@@ -87,7 +87,7 @@ namespace DidactCore.Flows
         /// <param name="queueType"></param>
         /// <param name="queueName"></param>
         /// <returns></returns>
-        IFlowConfigurator ForQueue(string queueType, string queueName = Defaults.DefaultQueueName);
+        IFlowConfigurator WithDefaultQueue(string queueType, string queueName = Defaults.DefaultQueueName);
 
         /// <summary>
         /// Adds the Cron Schedule trigger to the Flow's Cron Schedule trigger collection.
