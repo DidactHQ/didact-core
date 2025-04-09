@@ -4,6 +4,5 @@
     {
         public const string Auto = "Auto";
         public const string Deferred = "Deferred";
-        public const string Manual = "Manual";
     }
 }
