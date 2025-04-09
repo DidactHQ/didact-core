@@ -87,7 +87,7 @@ namespace DidactCore.Flows
         /// <param name="queueType"></param>
         /// <param name="queueName"></param>
         /// <returns></returns>
-        IFlowConfigurator ForQueue(string queueType, string queueName = DidactDefaults.DefaultQueueName);
+        IFlowConfigurator ForQueue(string queueType, string queueName = Defaults.DefaultQueueName);
 
         /// <summary>
         /// Adds the Cron Schedule trigger to the Flow's Cron Schedule trigger collection.
