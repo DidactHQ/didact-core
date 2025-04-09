@@ -25,7 +25,7 @@ namespace DidactCore.Flows
 
         public string QueueName { get; private set; } = DidactDefaults.DefaultQueueName;
 
-        public IEnumerable<ICronScheduleTrigger> CronScheduleTriggers { get; private set; }
+        public ICollection<ICronScheduleTrigger> CronScheduleTriggers { get; private set; } = [];
 
         public TimeSpan? Delay { get; private set; } = null;
 
@@ -66,9 +66,9 @@ namespace DidactCore.Flows
             return this;
         }
 
-        public IFlowConfigurator WithCronScheduleTriggers(IEnumerable<ICronScheduleTrigger> cronScheduleTriggers)
+        public IFlowConfigurator WithCronScheduleTrigger(ICronScheduleTrigger cronScheduleTrigger)
         {
-            CronScheduleTriggers = cronScheduleTriggers;
+            CronScheduleTriggers.Add(cronScheduleTrigger);
             return this;
         }
 
