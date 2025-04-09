@@ -1,7 +1,9 @@
 ﻿using DidactCore.Constants;
 using DidactCore.Exceptions;
+using DidactCore.Triggers;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DidactCore.Flows
@@ -23,11 +25,9 @@ namespace DidactCore.Flows
 
         public string QueueName { get; private set; } = DidactDefaults.DefaultQueueName;
 
+        public IEnumerable<ICronScheduleTrigger> CronScheduleTriggers { get; private set; }
+
         public TimeSpan? Delay { get; private set; } = null;
-
-        public DateTime? StartDateTime { get; private set; }
-
-        public DateTime? EndDateTime { get; private set; }
 
         public FlowConfigurator(ILogger logger, IFlowRepository flowRepository)
         {
@@ -63,6 +63,12 @@ namespace DidactCore.Flows
         {
             QueueType = queueType;
             QueueName = queueName;
+            return this;
+        }
+
+        public IFlowConfigurator WithCronScheduleTriggers(IEnumerable<ICronScheduleTrigger> cronScheduleTriggers)
+        {
+            CronScheduleTriggers = cronScheduleTriggers;
             return this;
         }
 

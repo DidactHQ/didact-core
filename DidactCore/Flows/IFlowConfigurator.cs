@@ -1,5 +1,7 @@
 ﻿using DidactCore.Constants;
+using DidactCore.Triggers;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DidactCore.Flows
@@ -42,19 +44,14 @@ namespace DidactCore.Flows
         string QueueName { get; }
 
         /// <summary>
+        /// The collection of Cron Scheduler triggers for the Flow.
+        /// </summary>
+        IEnumerable<ICronScheduleTrigger> CronScheduleTriggers { get; }
+
+        /// <summary>
         /// An optional delay when enqueuing the Flow. The delay is a TimeSpan object, so it should be easy to delay by seconds, minutes, hours, etc.
         /// </summary>
         TimeSpan? Delay { get; }
-
-        /// <summary>
-        /// The optional start datetime of the Flow's CRON schedule.
-        /// </summary>
-        DateTime? StartDateTime { get; }
-
-        /// <summary>
-        /// The optional end datetime of the Flow's CRON schedule.
-        /// </summary>
-        DateTime? EndDateTime { get; }
 
         /// <summary>
         /// Sets the Flow name.
@@ -91,6 +88,13 @@ namespace DidactCore.Flows
         /// <param name="queueName"></param>
         /// <returns></returns>
         IFlowConfigurator ForQueue(string queueType, string queueName = DidactDefaults.DefaultQueueName);
+
+        /// <summary>
+        /// Sets the collection of Cron Schedule triggers for the Flow.
+        /// </summary>
+        /// <param name="cronScheduleTriggers"></param>
+        /// <returns></returns>
+        IFlowConfigurator WithCronScheduleTriggers(IEnumerable<ICronScheduleTrigger> cronScheduleTriggers);
 
         /// <summary>
         /// Sets a delay for the Flow when it is enqueued. The delay is a TimeSpan object, so it should be easy to delay by seconds, minutes, hours, etc.
