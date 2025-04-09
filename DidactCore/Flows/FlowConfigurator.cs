@@ -13,13 +13,13 @@ namespace DidactCore.Flows
         private readonly ILogger<FlowConfigurator> _logger;
         private readonly IFlowRepository _flowRepository;
 
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
 
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
         public string Version { get; private set; } = DidactDefaults.DefaultFlowVersion;
 
-        public string TypeName { get; private set; }
+        public string? TypeName { get; private set; }
 
         public string QueueType { get; private set; } = QueueTypes.HyperQueue;
 

@@ -15,12 +15,12 @@ namespace DidactCore.Flows
         /// <summary>
         /// The Flow's name.
         /// </summary>
-        string Name { get; }
+        string? Name { get; }
 
         /// <summary>
         /// The Flow's description.
         /// </summary>
-        string Description { get; }
+        string? Description { get; }
 
         /// <summary>
         /// The Flow's version.
@@ -30,7 +30,7 @@ namespace DidactCore.Flows
         /// <summary>
         /// The Flow's Type name.
         /// </summary>
-        string TypeName { get; }
+        string? TypeName { get; }
 
         /// <summary>
         /// The designated queue type that the Flow will execute against. The default type is HyperQueue.
