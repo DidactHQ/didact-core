@@ -11,6 +11,7 @@ namespace DidactCore.Flows
     public class FlowConfigurator : IFlowConfigurator
     {
         private readonly ILogger<FlowConfigurator> _logger;
+
         private readonly IFlowRepository _flowRepository;
 
         public string? Name { get; private set; }
