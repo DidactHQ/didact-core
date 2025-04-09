@@ -21,6 +21,10 @@ namespace DidactCore.Entities
 
         public int ConcurrencyLimit { get; set; }
 
+        public string DefaultQueueType { get; set; } = null!;
+
+        public string DefaultQueueName { get; set; } = null!;
+
         public DateTime Created { get; set; }
 
         public string CreatedBy { get; set; } = null!;
