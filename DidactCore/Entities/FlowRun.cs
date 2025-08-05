@@ -29,7 +29,7 @@ namespace DidactCore.Entities
 
         public int StateId { get; set; }
 
-        public DateTime ScheduledFor { get; set; }
+        public DateTime ProjectedStartTime { get; set; }
 
         public DateTime? ExecutionStarted { get; set; }
 

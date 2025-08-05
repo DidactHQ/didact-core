@@ -1,35 +1,34 @@
 ﻿using DidactCore.Constants;
 using DidactCore.Exceptions;
+using DidactCore.Triggers;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DidactCore.Flows
 {
     public class FlowConfigurator : IFlowConfigurator
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<FlowConfigurator> _logger;
+
         private readonly IFlowRepository _flowRepository;
 
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
 
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
-        public string Version { get; private set; } = DidactDefaults.DefaultFlowVersion;
+        public string Version { get; private set; } = Defaults.DefaultFlowVersion;
 
-        public string TypeName { get; private set; }
+        public string? TypeName { get; private set; }
 
-        public string QueueType { get; private set; } = QueueTypes.HyperQueue;
+        public string DefaultQueueType { get; private set; } = QueueTypes.HyperQueue;
 
-        public string QueueName { get; private set; } = DidactDefaults.DefaultQueueName;
+        public string DefaultQueueName { get; private set; } = Defaults.DefaultQueueName;
 
-        public TimeSpan? Delay { get; private set; } = null;
+        public ICollection<ICronScheduleTrigger> CronScheduleTriggers { get; private set; } = [];
 
-        public DateTime? StartDateTime { get; private set; }
-
-        public DateTime? EndDateTime { get; private set; }
-
-        public FlowConfigurator(ILogger logger, IFlowRepository flowRepository)
+        public FlowConfigurator(ILogger<FlowConfigurator> logger, IFlowRepository flowRepository)
         {
             _logger = logger;
             _flowRepository = flowRepository;
@@ -59,16 +58,16 @@ namespace DidactCore.Flows
             return this;
         }
 
-        public IFlowConfigurator ForQueue(string queueType, string queueName = DidactDefaults.DefaultQueueName)
+        public IFlowConfigurator WithDefaultQueue(string queueType, string queueName = Defaults.DefaultQueueName)
         {
-            QueueType = queueType;
-            QueueName = queueName;
+            DefaultQueueType = queueType;
+            DefaultQueueName = queueName;
             return this;
         }
 
-        public IFlowConfigurator WithDelay(TimeSpan delay)
+        public IFlowConfigurator WithCronScheduleTrigger(ICronScheduleTrigger cronScheduleTrigger)
         {
-            Delay = delay;
+            CronScheduleTriggers.Add(cronScheduleTrigger);
             return this;
         }
 

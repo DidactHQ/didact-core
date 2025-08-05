@@ -1,4 +1,5 @@
 ﻿using DidactCore.Flows;
+using DidactCore.Triggers;
 using System.Threading.Tasks;
 
 namespace DidactCore
@@ -16,7 +17,8 @@ namespace DidactCore
         {
             flowConfigurator
                 .WithTypeName(GetType().Name)
-                .WithDescription("A sample flow");
+                .WithDescription("A sample flow")
+                .WithCronScheduleTrigger(new CronScheduleTrigger("test"));
 
             return Task.FromResult(flowConfigurator);
         }

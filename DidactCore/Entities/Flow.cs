@@ -11,7 +11,7 @@ namespace DidactCore.Entities
 
         public long LibraryId { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
 
         public string? Description { get; set; }
 
@@ -20,6 +20,10 @@ namespace DidactCore.Entities
         public int ExecutionModeId { get; set; }
 
         public int ConcurrencyLimit { get; set; }
+
+        public string DefaultQueueType { get; set; } = null!;
+
+        public string DefaultQueueName { get; set; } = null!;
 
         public DateTime Created { get; set; }
 
