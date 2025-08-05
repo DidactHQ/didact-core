@@ -28,8 +28,6 @@ namespace DidactCore.Flows
 
         public ICollection<ICronScheduleTrigger> CronScheduleTriggers { get; private set; } = [];
 
-        public TimeSpan? Delay { get; private set; } = null;
-
         public FlowConfigurator(ILogger<FlowConfigurator> logger, IFlowRepository flowRepository)
         {
             _logger = logger;
@@ -70,12 +68,6 @@ namespace DidactCore.Flows
         public IFlowConfigurator WithCronScheduleTrigger(ICronScheduleTrigger cronScheduleTrigger)
         {
             CronScheduleTriggers.Add(cronScheduleTrigger);
-            return this;
-        }
-
-        public IFlowConfigurator WithDelay(TimeSpan delay)
-        {
-            Delay = delay;
             return this;
         }
 
