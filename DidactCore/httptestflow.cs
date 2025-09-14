@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace DidactCore
 {
-    public class SomeFlow : IFlow
+    public class HttpTestFlow : IFlow
     {
         private readonly IFlowLogger _flowLogger;
         private readonly IFlowConfigurator _flowConfigurator;
         private readonly IDidactDependencyInjector _didactDependencyInjector;
 
-        public SomeFlow(IFlowLogger flowLogger, IFlowConfigurator flowConfigurator, IDidactDependencyInjector didactDependencyInjector)
+        public HttpTestFlow(IFlowLogger flowLogger, IFlowConfigurator flowConfigurator, IDidactDependencyInjector didactDependencyInjector)
         {
             _flowLogger = flowLogger;
             _flowConfigurator = flowConfigurator;
@@ -26,7 +26,7 @@ namespace DidactCore
         public async Task ConfigureAsync()
         {
             await _flowConfigurator
-                .WithName("SomeFlow Custom Name")
+                .WithName("HttpTestFlow Custom Name")
                 .WithDescription("A flow description.")
                 .AsVersion("1.0-alpha")
                 .WithTypeName(GetType().Name)

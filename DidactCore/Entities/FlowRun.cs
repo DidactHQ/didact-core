@@ -17,7 +17,7 @@ namespace DidactCore.Entities
 
         public int TriggerTypeId { get; set; }
 
-        public int ExecutionModeId { get; set; }
+        //public int ExecutionModeId { get; set; }
 
         public string? Name { get; set; }
 
@@ -58,6 +58,9 @@ namespace DidactCore.Entities
         public virtual TriggerType TriggerType { get; set; } = null!;
 
         public virtual ExecutionMode ExecutionMode { get; set; } = null!;
+
+        public int ExecutionModeId { get; set; } // Add this property
+
 
         public virtual ICollection<BlockRun> BlockRuns { get; set; } = new List<BlockRun>();
 

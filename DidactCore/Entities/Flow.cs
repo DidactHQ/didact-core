@@ -17,6 +17,8 @@ namespace DidactCore.Entities
 
         public string TypeName { get; set; } = null!;
 
+
+
         public int ExecutionModeId { get; set; }
 
         public int ConcurrencyLimit { get; set; }
